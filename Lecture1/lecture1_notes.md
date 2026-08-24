@@ -4,6 +4,12 @@
 * [Lecture notes](https://cs50.harvard.edu/x/notes/1/#lecture-1)
 * [Lecture VS Code](https://cs50.dev/)
 * [Manual Pages](https://manual.cs50.io/)
+* [Magic Numbers video](https://video.cs50.io/vK_naJkrtjc)
+* [Problem Set 1](https://cs50.harvard.edu/x/psets/1/)
+
+# Class Introduction
+
+Just some basic stuff that serves as an introduction to the course.
 
 # 8 Bit Calculation Cheatsheet
 
