@@ -99,3 +99,92 @@ int main(void) {
 ```
 
 We're gonna ignore what a string *really* is for the next week or two (my guess is it's an array of `char`s). Just keep in mind that C has no native string type. What we call a "string" is just a convention: a contiguous block of `char`s in memory, where the end is marked by a `\0` (null) byte.
+
+Now let's fix the logic for the introduction:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void) {
+    string name = get_string("What's your name? ");
+    printf("hello, %s\n", name);
+}
+```
+
+# Defining Logical Errors in Your Code
+
+When you want to define a logical problem in your code, and find out what's going wrong, `printf()` is your friend. Again, things your aware of, but maybe this will lead into a concept you aren't familiar with. Anyway, let's demonstrate this with an example where we do the whole Mario print three bricks thing:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    for (int i = 0 ; i <= 3; i++) {
+        printf("#\n");
+    }
+}
+```
+
+There's a pretty blatant and deliberate mistake here: the `<=` operator should be `<`.
+
+However, let's take a look at how we'd debug this with `printf()`:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    for (int i = 0 ; i <= 3; i++) {
+        printf("i is %i\n", i);
+        printf("#\n");
+    }
+}
+```
+
+Obviously results in:
+
+```bash
+i is 0
+#
+i is 1
+#
+i is 2
+#
+i is 3
+#
+```
+
+As you already stated, the solution is as follow:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void) {
+    for (int i = 0; i < 3; i++) {
+        printf("#\n");
+    }
+}
+```
+
+Now let's work on making a better variant by **modularizing** it:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+void print_column(int height); // Function "prototype"
+
+int main(void) {
+    int h = get_int("Height: ");
+    print_column(h);
+}
+
+void print_column(int height) {
+    for (int i = 0; i < height; i++) {
+        printf("#\n");
+    }
+}
+```
+
+As your code increases in complexity (and as you're already aware), `printf()` is not going to be sufficient enough to debug.
