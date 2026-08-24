@@ -187,4 +187,43 @@ void print_column(int height) {
 }
 ```
 
-As your code increases in complexity (and as you're already aware), `printf()` is not going to be sufficient enough to debug.
+As your code increases in complexity (and as you're already aware), `printf()` is not going to be sufficient enough to debug. Luckily, the course provides `debug50`. This automates the process of starting the debugger. Other than that, it's the equivalent to an actual debugger you'd use.
+
+# debug50
+
+`debug50` enables you to slow down and debug your code line-by-line. Let's use the previous example to help us understand why we were getting four instead of three `#`s. Here's the incorrect code again:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+void print_column(int height); // Function "prototype"
+
+int main(void) {
+    int h = get_int("Height: ");
+    print_column(h);
+}
+
+void print_column(int height) {
+    for (int i = 0; i <= height; i++) { // Reinstated "less than or equal to" error
+        printf("#\n");
+    }
+}
+```
+
+In your terminal:
+
+```bash
+debug50 ./buggy
+```
+
+The result:
+
+```bash
+Looks like you haven't set any breakpoints. Set at least one breakpoint by clicking to the left of a
+Line number and then re-run debua50!*
+```
+
+If you hover over the left side where the line numbers are, you'll notice these red dots appearing. This is where you can click on them and insert a break point. Now if you rerun the above command you can investigate everything in the debugger panel. In the panel, you'll see `h = 32764`, which is a **garbage value**, which is a default value inside of a variable that's a result of that memory being used for something else. The moment the code executes, that value will change.
+
+There's also a "call stack" which shows what has been called.
