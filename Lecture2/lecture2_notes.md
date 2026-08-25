@@ -322,3 +322,58 @@ Now we go a step further and convert assembly code to 0s and 1s. Now you're in t
 ## Linking
 
 This is what links *all* the 0s and 1s together. It pulls all the requirements together (the code in the headers, your code, and everything else) so that they can function as one.
+
+# Data Types
+
+Here's a quick overview of some data types and their bit/byte usage:
+
+```
+bool    1 byte
+int     4 bytes
+long    8 bytes
+float   4 bytes
+double  8 bytes
+char    1 byte
+string  ?
+```
+
+* A bool, even though is could just be represented as a 0 or 1, takes up a byte for a multitude of reasons, but it's mainly because it's wasier and more efficient at the end of the day.
+* A string is undetermined because, obviously, a string can be any length.
+
+Refer to the [Lecture video](https://www.youtube.com/watch?v=h5Gc1n8ZuU8) (at around 1 hour 5 minutes) for more information on how bytes are literally and physically stored in memory.
+
+## Working with Floats
+
+Consider the following program:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int score1 = 72;
+    int score2 = 73;
+    int score3 = 33;
+
+    printf("Average: %i\n", (score1 + score2 + score3) / 3);
+}
+```
+
+This will compile, but the result will be truncated, since we're trying to divide `int`s, not `float`s. You already know this, but here's where the professor drops some **Serious knowledge**:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int score1 = 72;
+    int score2 = 73;
+    int score3 = 33;
+
+    // Changed `%i` to `%f`
+    // Casted the divisor as a float
+    printf("Average: %f\n", (score1 + score2 + score3) / (float) 3; // Can also use `3.0` to have it treated as a float
+}
+```
+
+Turns out, if you divide `int`s by a `float`, the `int`s are automatically treated as a `float`! I wouldn't have expected this from C, so that's pretty awesome.
+
+Also, it makes a bit more sense semantically (and for clarity) to cast 3 as a `float`, rather than just stating it as 3.0.
