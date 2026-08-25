@@ -370,10 +370,37 @@ int main(void) {
 
     // Changed `%i` to `%f`
     // Casted the divisor as a float
-    printf("Average: %f\n", (score1 + score2 + score3) / (float) 3; // Can also use `3.0` to have it treated as a float
+    printf("Average: %f\n", (score1 + score2 + score3) / (float) 3); // Can also use `3.0` to have it treated as a float
 }
 ```
 
-Turns out, if you divide `int`s by a `float`, the `int`s are automatically treated as a `float`! I wouldn't have expected this from C, so that's pretty awesome.
+While you could manually change each `int` to be declared as a `float`, this is unnecessary. Turns out, if you divide `int`s by a `float`, the `int`s are automatically treated as a `float`! I wouldn't have expected this from C, so that's pretty nice.
 
-Also, it makes a bit more sense semantically (and for clarity) to cast 3 as a `float`, rather than just stating it as 3.0.
+Also, as a quick aside, it makes a bit more sense semantically (and for clarity) to cast 3 as a `float`, rather than just stating it as 3.0.
+
+NOW... as you've noticed, declaring variables like we did with these `int`s is stupid and inefficient. Thus, we finally get to talk about arrays.
+
+# Arrays
+
+This is where things start getting a bit more tricky in C when is comes to managing your data. When you declare an array, you have to specify its length. So, if we wanted an array to store three scores, we'd have to declare it like this:
+
+```c
+int scores[3];
+```
+
+Now let's implement this:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int scores[3];
+    scores[0] = 72
+    scores[1] = 73
+    scores[2] = 33
+
+    for (i = 0; i < )
+
+    printf("Average: %f\n", (scores[0] + scores[1] + scores[2]) / (float) 3);
+}
+```
