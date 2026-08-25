@@ -7,7 +7,7 @@
 
 # Arrays
 
-We're gonna discuss... well... arrays!
+Preprocessing. Compiling. Assembling. Linking. Debugging. Arrays. Strings. Command-Line Arguments. Cryptography.
 
 # Cryptography
 
@@ -224,6 +224,53 @@ Looks like you haven't set any breakpoints. Set at least one breakpoint by click
 Line number and then re-run debua50!*
 ```
 
-If you hover over the left side where the line numbers are, you'll notice these red dots appearing. This is where you can click on them and insert a break point. Now if you rerun the above command you can investigate everything in the debugger panel. In the panel, you'll see `h = 32764`, which is a **garbage value**, which is a default value inside of a variable that's a result of that memory being used for something else. The moment the code executes, that value will change.
+If you hover over the left side where the line numbers are, you'll notice these red dots appearing. This is where you can click on them and insert a break point. Now if you rerun the above command you can investigate everything in the debugger panel. In the panel, you'll see `h = 32764`, which is a **garbage value**, which is a default value inside of a variable that's a result of that memory being used for something else. The moment the code executes, that value will change (this is apparently a bit of an oversimplification).
 
 There's also a "call stack" which shows what has been called.
+
+I would add more to this, but this seems like something you'll have to learn through practice.
+
+# Converting to Machine Code - What's Really Happening
+
+To begin with, `make` is not technically the compiler itself. The compiler you've been using is actually called `clang`, for "C language". What `make` is really doing is running:
+
+```bash
+clang hello.c
+./a.out
+```
+
+`./a.out` is for **assembler output**. So, if you were to use the `clang` command and then use `ls`, you'd notice that there's a new file called `a.out` (the default name for the `clang` output).
+
+Let's say you were going to try and run `clang hello.c` on this version of `hello.c`:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void) {
+    string name = get_string("What's your name? ");
+    printf("hello, %s\n", name);
+}
+```
+
+Your output after running `clang hello.c` would result in this error:
+
+```bash
+/usr/bin/ld: /tmp/hello-b6391a.o: in function 'main': hello.c: (.text+0x16): undefined reference to 'get_string' clang: error: linker command failed with exit code 1
+```
+
+This is because you're just assuming that `clang` knows where to find the CS50 version of `get_string()`, and this clearly isn't the case. Technically, if you want the compiler to compile this code, you'd need to do the following:
+
+```bash
+clang hello.c -lcs50
+```
+
+`lcs50` "links" the cs50 library so that it knows what 0s and 1s belong to the `get_string()` function.
+
+We can also change the output name from `a.out` to something else. We can use the following command line argument:
+
+```bash
+clang -o hello hello.c -lcs50
+```
+
+In the documentation for `clang`, it's stated that `-o` followed by any name/word of your choice renames the file (without having to resort to something like `mv`).
