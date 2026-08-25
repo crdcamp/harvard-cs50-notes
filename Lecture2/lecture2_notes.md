@@ -412,7 +412,8 @@ Now let's clean it up a bit with the `get_int()` from CS50, a loop, and an avera
 float average(int length, int numbers[]);
 
 int main(void) {
-    // `const`s are typically capitalized just to better visually communicate that you're declaring a constant
+    // `const`s are typically capitalized just to better
+    // visually communicate that you're declaring a constant
     const int N = 3; // `const` because `n` isn't changing
     int scores[N];
     for (int i = 0; i < N; i++) {
@@ -431,3 +432,41 @@ float average(int length, int numbers[]) {
     return sum / (float) length;
 }
 ```
+
+## Chars, Arrays, and Strings
+
+As you already concluded, a `string` is just an array of `char`s.
+
+Here's a quick demonstration:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void) {
+    string s = "HI!";
+    printf("%c %c %c\n", s[0], s[1], s[2]);
+    // To show the ASCII values:
+    printf("%i %i %i\n", s[0], s[1], s[2]);
+}
+```
+
+Now, what would happen if we extend beyond the used indices of the string like this?
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void) {
+    string s = "HI!";
+    printf("%i %i %i %i\n", s[0], s[1], s[2], s[3]);
+}
+```
+
+This would result in:
+
+```bash
+72 73 33 0
+```
+
+The fourth byte in the computer's memory is 0 by design. The compiler automatically terminates any string put in double quotes with a pattern of 8 zero bits. This is represented as `\0`, which directly translates to the former.
