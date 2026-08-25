@@ -399,8 +399,35 @@ int main(void) {
     scores[1] = 73
     scores[2] = 33
 
-    for (i = 0; i < )
-
     printf("Average: %f\n", (scores[0] + scores[1] + scores[2]) / (float) 3);
+}
+```
+
+Now let's clean it up a bit with the `get_int()` from CS50, a loop, and an average function:
+
+```c
+#include <cs50.h> // Using `get_int()` now
+#include <stdio.h>
+
+float average(int length, int numbers[]);
+
+int main(void) {
+    // `const`s are typically capitalized just to better visually communicate that you're declaring a constant
+    const int N = 3; // `const` because `n` isn't changing
+    int scores[N];
+    for (int i = 0; i < N; i++) {
+        scores[i] = get_int("Score: ");
+    }
+    
+    printf("Average: %f\n", average(N, scores)); // We're assuming we already have an average function here
+}
+
+float average(int length, int numbers[]) {
+    int sum = 0;  
+    for (int i = 0; i < length; i++) {
+        sum += numbers[i];
+    }
+
+    return sum / (float) length;
 }
 ```
