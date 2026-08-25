@@ -304,3 +304,21 @@ void meow(void) {
     printf("meow\n")
 }
 ```
+
+A reminder that the prototype `void meow(void);` is necessary because we need to tell the compiler that `meow()` exists before using it (since the C compiler reads code from top to bottom). This is essentially what the headers do as well. For instance, the prototype for `printf()` is in `stdio.h`.
+
+Essentially the compiler finds the file called `stdio.h` and copies and pastes its contents into the code (or the relevant ones at least). This is likely a massive oversimplification, but the central idea remains the same. That's pretty much the whole preprocessing step in a nut shell.
+
+## Compiling
+
+Compiling takes the preprocessed code and converts it into **assembly** code. As you know, this is pretty much as close as you can get to the 0s and 1s that lie underneath everything. Before assembly, people were literally just writing 0s and 1s with punch cards.
+
+In summary, compiling takes C code and converts it to assembly code.
+
+## Assembling
+
+Now we go a step further and convert assembly code to 0s and 1s. Now you're in the deep dark depths of programming pain.
+
+## Linking
+
+This is what links *all* the 0s and 1s together. It pulls all the requirements together (the code in the headers, your code, and everything else) so that they can function as one.
