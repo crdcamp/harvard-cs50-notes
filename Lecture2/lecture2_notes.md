@@ -230,7 +230,7 @@ There's also a "call stack" which shows what has been called.
 
 I would add more to this, but this seems like something you'll have to learn through practice.
 
-# Converting to Machine Code - What's Really Happening
+# Compiling - What's Really Happening
 
 To begin with, `make` is not technically the compiler itself. The compiler you've been using is actually called `clang`, for "C language". What `make` is really doing is running:
 
@@ -274,3 +274,33 @@ clang -o hello hello.c -lcs50
 ```
 
 In the documentation for `clang`, it's stated that `-o` followed by any name/word of your choice renames the file (without having to resort to something like `mv`).
+
+# Compiling - A Deeper Dive
+
+Using the `-l` command to link the library certainly implies that something more interesting is going on that `make` is abstracting away. So, let's take a look at the actual code we're compiling.
+
+**Compiling code refers to four different processes:**
+1) Preprocessing
+1) Compiling
+1) Assembling
+1) Linking
+
+## Preprocessing
+
+Consider this program:
+
+```c
+#include ‹stdio.h›
+
+void meow(void);
+
+int main(void) {
+    for (int i = 0; i < 3; i++) {
+        meow()
+    }
+}
+
+void meow(void) {
+    printf("meow\n")
+}
+```
