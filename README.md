@@ -4,5 +4,5 @@ I'm mostly just leaving this repository here to have my commit history show that
 
 ## Links
 
-* [Lecture VS Code](https://cs50.dev/)
+* [Course Web VS Code](https://cs50.dev/)
 * [Course home page](https://pll.harvard.edu/course/cs50-introduction-computer-science)

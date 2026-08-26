@@ -3,7 +3,7 @@
 * [Lecture video](https://www.youtube.com/watch?v=h5Gc1n8ZuU8)
 * [Lecture notes](https://cs50.harvard.edu/x/notes/2/)
 * [Manual Pages](https://manual.cs50.io/)
-* [Problem Set 2]()
+* [Problem Set 2](https://cs50.harvard.edu/x/psets/2/)
 
 # Arrays
 
@@ -645,7 +645,7 @@ int main(int argc, string argv[]) {
 }
 ```
 
-By convention, we use `arc` (the count of the arguments) and `argv` (the argument vector aka array of strings).
+By convention, we use `argc` (the count of the arguments) and `argv` (the argument vector aka array of strings).
 
 Now we can write programs that have command line arguments like so:
 
