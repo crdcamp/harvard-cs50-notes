@@ -232,7 +232,7 @@ I would add more to this, but this seems like something you'll have to learn thr
 
 # Compiling - What's Really Happening
 
-To begin with, `make` is not technically the compiler itself. The compiler you've been using is actually called `clang`, for "C language". What `make` is really doing is running:
+`make` is not technically the compiler itself. The compiler you've been using is actually called `clang`, for "C language". What `make` is really doing is running:
 
 ```bash
 clang hello.c
@@ -337,10 +337,10 @@ char    1 byte
 string  ?
 ```
 
-* A bool, even though is could just be represented as a 0 or 1, takes up a byte for a multitude of reasons, but it's mainly because it's wasier and more efficient at the end of the day.
+* A bool, even though is could just be represented as a 0 or 1, takes up a byte for a multitude of reasons, but it's mainly because it's easier and more efficient at the end of the day.
 * A string is undetermined because, obviously, a string can be any length.
 
-Refer to the [Lecture video](https://www.youtube.com/watch?v=h5Gc1n8ZuU8) (at around 1 hour 5 minutes) for more information on how bytes are literally and physically stored in memory.
+Refer to the [Lecture video](https://www.youtube.com/watch?v=h5Gc1n8ZuU8) (at around 1 hour 5 minutes) for more information on how bytes are literally/physically stored in memory.
 
 ## Working with Floats
 
@@ -358,7 +358,7 @@ int main(void) {
 }
 ```
 
-This will compile, but the result will be truncated, since we're trying to divide `int`s, not `float`s. You already know this, but here's where the professor drops some **Serious knowledge**:
+This will compile, but the result will be truncated, since we're trying to divide `int`s, not `float`s. You already know this, but here's where the professor drops some serious knowledge:
 
 ```c
 #include <stdio.h>
@@ -414,7 +414,7 @@ float average(int length, int numbers[]);
 int main(void) {
     // `const`s are typically capitalized just to better
     // visually communicate that you're declaring a constant
-    const int N = 3; // `const` because `n` isn't changing
+    const int N = 3; // `const` because `N` isn't changing
     int scores[N];
     for (int i = 0; i < N; i++) {
         scores[i] = get_int("Score: ");
@@ -469,4 +469,239 @@ This would result in:
 72 73 33 0
 ```
 
-The fourth byte in the computer's memory is 0 by design. The compiler automatically terminates any string put in double quotes with a pattern of 8 zero bits. This is represented as `\0`, which directly translates to the former.
+The fourth byte in the computer's memory is 0 by design. The compiler automatically terminates any string put in double quotes with a pattern of 8 zero bits (or a byte). This is represented as `\0`, which directly translates to the former. This is called the **nul character**, which always represents the end of a string.
+
+This means that a string of three `char`s would actually take up 4 bytes instead of three. Also, you remember how you were wondering why we're declaring array lengths that are seemingly greater than the number of `char`s were using (since indexing always starts at 0)? Well... this is why. The array needs that extra space for the `\0`.
+
+Beyond just making an array of `char`s, you can also make an array of `string`s:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void) {
+    string words[2];
+
+    words[0] = "HI!";
+    words[1] = "BYE!";
+
+    printf("%s\n", words[0]);
+    printf("%s\n", words[1]);
+}
+```
+
+Now you have the ability to use two brackets to access both the `string` values and their `char` values like so:
+
+```c
+printf("%c%c\n", words[0][1]);
+```
+
+As a final point, you can use `{}` to specify the values in an array without having to individually declare them.
+
+**Note:** There's also no need to declare the size of the array either.
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void) {
+    const int N = 3;
+    int scores[] = {72, 73, 33};
+}
+```
+
+## Finding the Length of a String
+
+Consider the following example:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void) {
+    string name = get_string("Name: ");
+    int n = 0;
+
+    // Simply count until you reach the null character
+    while (name[n] != '\0') {
+        n++;
+    }
+    printf("%i\n", n);
+}
+```
+
+Pretty self explainable. No need for additional notes here.
+
+To avoid the need to always create a custom function like this, you can instead import `string.h` and use `strlen`. `string.h` contains a bunch of functions for handling strings. You can find a class manual for this [here](https://manual.cs50.io/#string.h).
+
+Here's how you can use `strlen` (it's incredibly simple):
+
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    string name = get_string("Name: ");
+
+    printf("%i\n", strlen(name));
+}
+```
+
+# Declaring Multiple Variables in a Loop
+
+Here's something you're going to want to use eventually. Let's start with a bad example:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    string s = get_string("Input: ");
+
+    for (int i = 0; i < strlen(s); i++) {
+        printf("%c", s[i]);
+    }
+    printf("\n")
+}
+```
+
+In this code, we're calculating the length of the string every time we iterate through the loop. This is retarded. Don't do this.
+
+Now the first fix that came to mind was declaring `strlen(s)` before the loop:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    string s = get_string("Input: ");
+    length = strlen(s);
+    
+    for (int i = 0; i < length; i++) {
+        printf("%c", s[i]);
+    }
+    printf("\n")
+}
+```
+
+While this is certainly better, we have a third option where we can declare multiple variables within the for loop's arguments like so:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    string s = get_string("Input: ");
+    
+    for (int i = 0, length = strlen(s); i < length; i++) {
+        printf("%c", s[i]);
+    }
+    printf("\n")
+}
+```
+
+This is a much cleaner way to do this, and I have a feeling that you'll want to use it in whatever assignment is coming up. Note that you don't declare the variable type after `int i = 0` since **this syntax only allows one data type**. If you need a different data type, you're out of luck. It's also worth mentioning that pretty much any compiler would fix the issue in the first bad example code, but you know... ya love best practices.
+
+# ctype Library
+
+I didn't write this part down, but the professor converted letters to uppercase by subtracting 32 from a `char` value. You can accomplish this much more simply and with much less code using the `ctype.h` library:
+
+```c
+#include <ctype.h>
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    string s = get_string("Input: ");
+    
+    for (int i = 0, length = strlen(s); i < length; i++) {
+        if (islower(s[i])) {
+            printf("%c", toupper(s[i]));
+        }
+    }
+    printf("\n")
+}
+```
+
+There's no need for an else statement because `islower()` and `isupper()` already handle that case.
+
+# main
+
+`main` is the function that will be called **automatically**. It's a standardized function.
+
+As you know, `void` means that the function does not intake arguments. This is obviously not the case for every `main` function. You can define multiple `main` arguments like this:
+
+```c
+#include <stdio.h>
+
+int main(int argc, string argv[]) {
+    ...
+}
+```
+
+By convention, we use `arc` (the count of the arguments) and `argv` (the argument vector aka array of strings).
+
+Now we can write programs that have command line arguments like so:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(int argc, string argv[]) {
+    printf("hello, %s\n", argv[1]);
+}
+```
+
+We did `argv[1]` instead of `argv[0]` **because `argv[0]` automatically contains the program's own name**. You can use this to refer to your own project in outputs.
+
+Also a quick reminder that `argc` contains the number of arguments. **The first argument is always the program name, which is why we're specifying `if (argc != 2)`. So if you want to require two arguments from the user you could do it like this: 
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(int argc, string argv[]) {
+    if (argc != 2) { // `argc == 1` is the program name
+        printf("hello, %s\n", argv[1]);
+    }
+    else {
+        pritnf("hello, world\n");
+    }
+}
+```
+
+Then (after compiling the program) you can pass an argument in your terminal like so:
+
+```bash
+./greet Christian
+```
+
+Importantly, and for some reason that I can't understand, **C only allows these two arguments in the main function**. Apparently it's just "because" according to the professor. The guy who made the language just decided that would be how it is. You might want to look more into this another time.
+
+# Exit Status
+
+By convention, `main` returns `0` if it executed successfully. Any other number is considered an error determined arbitrarily by whoever designed the program.
+
+Here's an example:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(int argc, string argv[]) {
+    if (argc != 2) {
+        printf("Missing command-line argument");
+        return 1;
+    }
+    printf("hello, %s\n", argv[1]);
+    return 0;
+}
+```
+
+You can use `echo $?` to see the return value to see what your code returned. You can use `./status` followed by inputs (or no inputs) to check the return code of the previous execution.
