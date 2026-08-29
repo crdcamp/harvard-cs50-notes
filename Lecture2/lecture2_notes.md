@@ -660,7 +660,7 @@ int main(int argc, string argv[]) {
 
 We did `argv[1]` instead of `argv[0]` **because `argv[0]` automatically contains the program's own name**. You can use this to refer to your own project in outputs.
 
-Also a quick reminder that `argc` contains the number of arguments. **The first argument is always the program name, which is why we're specifying `if (argc != 2)`. So if you want to require two arguments from the user you could do it like this: 
+Also a quick reminder that `argc` contains the number of arguments. **The first argument is always the program name**, which is why we're specifying `if (argc != 2)`. So if you want to require a single argument from the user you could do it like this: 
 
 ```c
 #include <cs50.h>
