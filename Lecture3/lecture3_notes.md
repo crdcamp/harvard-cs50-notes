@@ -12,4 +12,4 @@
 
 ![Graph](images/O_of_n_graph.png)
 
-Here are the actual notations we use:
+# Linear Search
