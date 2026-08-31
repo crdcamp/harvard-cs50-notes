@@ -222,3 +222,166 @@ int main(void) {
 ```
 
 Since this confused you a lil, notice that we define the array with length `3`, when you'd assume that we'd define it as `2`, since you're used to zero indexing. Well... apparently zero indexing doesn't apply when creating arrays. In that instance, the number you see in the array definition is literal, but you still need to create structs from `0` to `2`. Strange, but that's the way it is.
+
+# Sorting and Selection Sort
+
+* When a list is sorted, searching that list is far less taxing on the computer. Recall that **we can use binary search on a sorted list but not an unsorted one**.
+* There are many different types of sorting algorithms, **selection sort** being one of them.
+
+We can represent an array as follows:
+
+![Array Representation](images/array_rep.png)
+
+The algorithm for selection sort in pseudocode is:
+
+```pseudo
+For i from 0 to n-1
+  Find the smallest number between numbers[i] and numbers[n-1]
+  Swap smallest number with numbers[i]
+```
+
+Summarizing those steps, the first time iterating through the list takes `n-1` steps. The second time, it takes `n - 2` steps. Carrying this logic forward, the steps required could be represented as follows:
+
+```
+(n - 1) + (n - 2) + (n - 3) + ... + 1
+```
+
+This could be simplifies to n(n-1)/2 or, more simply, *O*(*n*^2). In th worst case, or upper bound, selection sort is in the order of *O*(*n*^2). In the best case, or lower bound, selection sort is in the order of <math mathvariant="normal">&#x3A9;</mi>(*n*^2).
+
+# Bubble Sort
+
+Bubble sort works by repeatedly swapping elements to "bubble" larger elements to the end.
+
+The pseudocode for bubble sort is:
+
+```pseudo
+Repeat n-1 times
+  For i from 0 to n-2
+    If numbers[i] and numbers[i + 1] out of order
+      Swap them
+    If no swaps
+      Quit
+```
+
+* As we further sort the array, we know more an more of it becomes sorted, so we only need to look at the pairs of numbers that haven't been sorted yet.
+* Bubble sort can be analyzed as follows:
+  * (n - 1) * (n - 1)
+  * n^2 - n - n + 1
+  * n^2 - 2n + 1
+  * or, more simply *O*(*n*^2)
+
+In the worst case or upper bound, bubble sort is in the order of 𝑂(𝑛2). In the best case or lower bound, bubble sort is in the order of Ω(𝑛).
+
+# Recursion
+
+Recursion is when a function calls itself. We saw this earlier here:
+
+```pseudo
+If no doors left
+    Return false
+If number behind middle door
+    Return true
+Else if number < middle door
+    Search left half
+Else if number > middle door
+    Search right half
+```
+
+Notice that we're calling `search `on smaller and smaller iterations of this problem.
+* A **base case** is defined as the condition that stops the recursion from continuing indefinitely, preventing infinite loops.
+* A **recursive case** is defined as the part of the recursive function that calls itself with a modified input, moving toward the base case.
+
+Consider how in week 1 we wanted to create a pyramid structure like this:
+
+```
+#
+##
+###
+####
+```
+
+We accomplished this with a loop like so:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+void draw(int n);
+
+int main(void) {
+    int height = get_int("Height: ");
+    draw(height);
+}
+
+void draw(int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < i + 1; j++) {
+            printf("#");
+        }
+        printf("\n");
+    }
+}
+```
+
+To implement this using recursion, we could write it as follows:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+void draw(int n);
+
+int main(void) {
+    int height = get_int("Height: ");
+    draw(height);
+}
+
+void draw(int n) {
+    // Base case
+    if (n <= 0) {
+        return;
+    }
+
+    // Draw pyramid of height n -1
+    draw(n - 1);
+
+    // Draw one more row of width n
+    for (int i = 0; i < n; i++) {
+        printf("#");
+    }
+    printf("\n");
+}
+```
+
+Notice the base case will ensure the code does not run forever. The line `if (n <= 0)` terminates the recursion because the problem has been solved. Every time `draw` calls itself, it calls itself with `n-1`. At some point, `n-1` will equal `0`, resulting in the `draw` function returning, and the program will end.
+
+# Merge Sort
+
+We can now leverage recursion in our quest for a more efficient sort algorithm and implement what is called a merge sort, a very efficient sort algorithm.
+
+The pseudocode for merge sort is quite short:
+
+```
+If only one number
+  Quit
+Else
+  Sort left half of numbers
+  Sort right hald of numbers
+  Merge sorted halves
+```
+
+Consider the following list of numbers:
+
+```6341```
+
+First, merge sort asks, "Is this one number? The answer is "no," so the algorithm continues.
+
+```6341```
+
+Second, merge sort will now split the numbers down the middle (or as close as it can get) and sort the left half of numbers.
+
+```63|41```
+
+Third, merge sort would look at these numbers on the left and ask "Is this one number?" Since the answer is no it would then split the numbers on the left down the middle.
+
+```6|3```
