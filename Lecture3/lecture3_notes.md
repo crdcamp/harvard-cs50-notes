@@ -89,3 +89,136 @@ Some common running times we may see are:
 * The <math mathvariant="normal">&#x3A9;</mi> symbol is used to denote the **best case** of an algorithm, such as <math mathvariant="normal">&#x3A9;</mi>(log *n*).
 * The <mi mathvariant="normal">&#x398;</mi> symbold is used to denote **where the upper bound and lower bound are the same**: Where the best case and worst case running times are the same.
 * **Asymptotic notation** is the measure of how well algorithms performs as the input gets larger.
+
+# search.c
+
+An example of linear search would be as follows:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void) {
+    int numbers[] = {20, 500, 10, 5, 100, 1, 50};
+
+    // Search for number
+    int n = get_int("Number: ");
+    for (int i = 0; i < 7; i++) {
+        if numbers[i] == n) {
+            printf("Found\n");
+            return 0;
+        }
+    }
+    printf("Not found\n");
+    return 1;
+}
+```
+
+Pretty self-explainable code here. No need to elaborate. But, what if we wanted to search for a string within an array?
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    string strings[] = {"battleship", "boot", "cannon", "iron", "thimble", "top hat"};
+
+    // Search for string
+    string s = get_string("String: ");
+    for (int i = 0; i < 6; i++) {
+        if (strcmp(strings[i], s) == 0) {
+            printf("Found\n");
+            return 0;
+        }
+    }
+    printf("Not found\n");
+    return 1;
+}
+```
+
+As covered in the lecture, `strcmp` will return `0` if the strings are the same. You can interpret differences in the strings that return values greater or less than `0`, but the lecture didn't elaborate too much on this.
+
+Visit the [CS50 manual pages](https://manual.cs50.io/3/strcmp) for more info on `strcmp`.
+
+# phonebook.c
+
+We can combine these ideas of both numbers and strings into a single program:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    string names[] = {"Kelly", "David", "John"};
+    string numbers[] = {"+1-617-495-1000", "+1-617-495-1000", "+1-949-468-2750"};
+
+    // Search for name
+    string name = get_string("Name: ");
+    for (int i = 0; i < 3; i++) {
+        if (strcmp(names[i], name) == 0) {
+            printf("Found %s\n", numbers[i]);
+        }
+    }
+    printf("Not found\n");
+    return 1;
+}
+```
+
+Again, pretty self-explainable code here. The index of both the name and number are assumed to be the same.
+
+However, now we are *finally* being introduced to structs!
+
+# Structs
+
+Building off the previous example, it'd clearly be better to have the names more tightly associated with the numbers. So... stucts!
+
+Here's how you define a struct:
+
+```c
+typedef struct {
+    string name;
+    string number;
+} person;
+```
+
+Now let's implement this struct into the example:
+
+```c
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+
+typedef struct {
+    string name;
+    string number;
+} person;
+
+int main(void) {
+    // Create an array of 3 structs
+    person people[3];
+
+    people[0].name = "Kelly";
+    people[0].number = "+1-617-495-1000";
+
+    people[1].name = "David";
+    people[1].number = "+1-617-495-1000";
+
+    people[2].name = "John";
+    people[2].number = "+1-949-468-2750";
+
+    // Search for name
+    string name = get_string("Name: ");
+    for (int i = 0; i < 3; i++) {
+        if (strcmp(people[i].name, name) == 0) {
+            printf("Found %s\n", people[i].number);
+            return 0;
+        }
+    }
+    printf("Not found\n");
+    return 1;
+}
+```
+
+Since this confused you a lil, notice that we define the array with length `3`, when you'd assume that we'd define it as `2`, since you're used to zero indexing. Well... apparently zero indexing doesn't apply when creating arrays. In that instance, the number you see in the array definition is literal, but you still need to create structs from `0` to `2`. Strange, but that's the way it is.
