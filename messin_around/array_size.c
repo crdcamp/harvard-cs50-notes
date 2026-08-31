@@ -7,6 +7,9 @@
 // I'm pretty sure this wouldn't work with an array of
 // strings, however
 
+// There's also another (likely better) method that uses pointers, but as
+// of writing this we haven't covered pointers yet
+
 int main(void) {
     int arr[] = {1, 2, 3, 4, 5};
 
