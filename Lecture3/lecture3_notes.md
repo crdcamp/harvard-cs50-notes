@@ -385,3 +385,15 @@ Second, merge sort will now split the numbers down the middle (or as close as it
 Third, merge sort would look at these numbers on the left and ask "Is this one number?" Since the answer is no it would then split the numbers on the left down the middle.
 
 ```6|3```
+
+Fourth, merge sort will again ask, "Is this one number?" The answer is yes this time! Therefore, it will quit this task and return to the last task it was running at this point:
+
+```63|41```
+
+Fifth, merge sort will sort the numbers on the left.
+
+```36|41```
+
+Now, we return to where we left off in the pseudocode now that the left side has been sorted. A similar process of steps 3-5 will occur with the right-hand numbers. This will result in:
+
+```36|14```
