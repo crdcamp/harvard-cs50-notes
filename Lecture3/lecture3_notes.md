@@ -355,6 +355,47 @@ void draw(int n) {
 
 Notice the base case will ensure the code does not run forever. The line `if (n <= 0)` terminates the recursion because the problem has been solved. Every time `draw` calls itself, it calls itself with `n-1`. At some point, `n-1` will equal `0`, resulting in the `draw` function returning, and the program will end.
 
+As a personal note, recursion might sound more scary than it actually is. While I assume it can be much more complex, the examples we've looked at thus far seem to require you to just define a base case and input part of a formula into the recursion function call. Suspiciously simple so far.
+
+However, where it does get a little more complicated is how it kind of seems like magic the way it works, which leads us to **call stacks**.
+
+## The Call Stack
+
+When you call a function, the system sets aside space in memory for that function to do its necessary work. We frequently call such chunks of memory **stack frames** or **function frames**.
+
+More than one function's stack frame may exist in memory at a given time. If `main()` calls `move*()`, which then calls `direction()`, all three functions have open frames.
+
+But, *in general*, **only one of these frames is ever active at one time**, despite all of them having memory space set aside.
+
+Resuming the notes from the video, these frames are arranged in a **stack**. The frame for the most recently called function is always on top of the stack.
+
+When a new function is called, a new frame is **pushed** onto the top of the stack and becomes the active frame.
+
+When a function finishes its work, its frame is **popped** off of the stack, and the frame immediately below it becomes the new, active, function on the top of the stack. This functions picks up immediately where it left off.
+
+Let's take a function that calculates factorials for instance:
+
+```c
+#include <stdio.h>
+
+int fact(int n);
+
+int main(void) {
+    printf("%i\n", fact(5));
+}
+
+int fact(int n) {
+    if (n == 1)
+        return 1;
+    else
+        return n * fact(n-1);
+}
+```
+
+* The first thing `main()` does is call another function `printf()`. As soon as it does that, `main()` is effectively on pause and waiting for `printf()` to do its thing.
+* However, since `printf()` also calls the function `fact()`, `printf()` is also put on pause. In other words, `fact()` is **pushed** to the top of the stack, same as `printf()` was before the code reached `fact()`.
+* Then, `fact()` is repeated until it hits the limit of `n-1`. Note the `fact(4)` all the way down to `fact(1)` are on pause until the code fulfills the current factorial (in this case, `facty(5)`).
+
 # Merge Sort
 
 We can now leverage recursion in our quest for a more efficient sort algorithm and implement what is called a merge sort, a very efficient sort algorithm.
