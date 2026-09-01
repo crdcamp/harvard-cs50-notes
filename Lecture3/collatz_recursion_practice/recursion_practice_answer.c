@@ -17,10 +17,13 @@ int main(void) {
 }
 
 int collatz(int n) {
+    // Base case
     if (n == 1)
         return 0;
+    // Even numbers
     else if ((n % 2) == 0)
         return 1 + collatz(n / 2);
+    // Odd numbers
     else
         return 1 + collatz(3*n + 1);
 }
