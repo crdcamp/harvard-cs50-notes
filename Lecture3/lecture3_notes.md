@@ -394,7 +394,7 @@ int fact(int n) {
 
 * The first thing `main()` does is call another function `printf()`. As soon as it does that, `main()` is effectively on pause and waiting for `printf()` to do its thing.
 * However, since `printf()` also calls the function `fact()`, `printf()` is also put on pause. In other words, `fact()` is **pushed** to the top of the stack, same as `printf()` was before the code reached `fact()`.
-* Then, `fact()` is repeated until it hits the limit of `n-1`. Note the `fact(4)` all the way down to `fact(1)` are on pause until the code fulfills the current factorial (in this case, `facty(5)`).
+* Then, `fact()` is repeated until it hits the limit of `n-1`. Note the `fact(4)` all the way down to `fact(2)` (since `n == 1` just returns `1`) are on pause until the code fulfills the current factorial (in this case, `facty(5)`).
 
 # Merge Sort
 
@@ -438,3 +438,11 @@ Fifth, merge sort will sort the numbers on the left.
 Now, we return to where we left off in the pseudocode now that the left side has been sorted. A similar process of steps 3-5 will occur with the right-hand numbers. This will result in:
 
 ```36|14```
+
+Both halves are now sorted. Finally, the algorithm will merge both sides. It will look at the first number on the left and the first number on the right. It will put the smaller number first, then the second smallest. The algorithm will repeat this for all numbers, resulting in:
+
+```1346```
+
+Merge sort is complete and the program quits.
+
+Merge sort is a very efficient sort algorithm with a worst case of 𝑂(𝑛 log 𝑛). The best case is still Ω(𝑛 log 𝑛) because the algorithm still must visit each place in the list. Therefore, merge sort is also Θ (𝑛 log 𝑛) **since the best case and worst case are the same**.
