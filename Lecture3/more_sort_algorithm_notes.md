@@ -122,147 +122,121 @@ Merge sort is a very efficient sort algorithm with a worst case of 𝑂(𝑛 log
 Now let's investigate the run times of `sort1` and `sort2` (in order of length):
 
 # random5000.txt
-
 **sort1**
-
 ```bash
 real    0m0.072s
-user    0m0.048s
-sys     0m0.021s
 ```
-
 **sort2**
-
 ```bash
 real    0m0.026s
-user    0m0.007s
-sys     0m0.016s
 ```
-
+**sort3**
+```bash
+real    0m0.045s
+```
 # random10000.txt
-
 ***sort1***
-
 ```bash
 real    0m0.207s
-user    0m0.152s
-sys     0m0.044s
 ```
-
 **sort2**
-
 ```bash
 real    0m0.061s
-user    0m0.011s
-sys     0m0.031s
 ```
-
+**sort3**
+```bash
+real    0m0.138s
+```
 # random50000.txt
-
 ***sort1***
-
 ```bash
 real    0m6.782s
-user    0m5.503s
-sys     0m0.213s
 ```
-
 ***sort2***
-
 ```bash
 real    0m0.597s
-user    0m0.054s
-sys     0m0.164s
 ```
-
+**sort3**
+```bash
+real    0m2.741s
+```
 # reversed5000.txt
-
 **sort1**
-
 ```bash
 real    0m0.088s
-user    0m0.047s
-sys     0m0.024s
 ```
-
 **sort2**
-
 ```bash
 real    0m0.035s
-user    0m0.008s
-sys     0m0.013s
 ```
-
+**sort3**
+```bash
+real    0m0.047s
+```
 # reversed10000.txt
-
 **sort1**
-
 ```bash
 real    0m0.268s
-user    0m0.198s
-sys     0m0.043s
 ```
-
 **sort2**
-
 ```bash
 real    0m0.078s
-user    0m0.008s
-sys     0m0.042s
 ```
-
+**sort3**
+```bash
+real    0m0.153s
+```
 # reversed50000.txt
-
+**sort1**
 ```bash
 real    0m7.494s
-user    0m5.883s
-sys     0m0.238s
 ```
-
+**sort2**
 ```bash
 real    0m0.528s
-user    0m0.052s
-sys     0m0.175s
 ```
-
+**sort3**
+```bash
+real    0m2.749s
+```
 # sorted5000.txt
-
+**sort1**
 ```bash
 real    0m0.032s
-user    0m0.007s
-sys     0m0.019s
 ```
-
+**sort2**
 ```bash
 real    0m0.032s
-user    0m0.006s
-sys     0m0.022s
 ```
-
+**sort3**
+```bash
+real    0m0.069s
+```
 # sorted10000.txt
-
+**sort1**
 ```bash
 real    0m0.087s
-user    0m0.011s
-sys     0m0.034s
 ```
-
+**sort2**
 ```bash
 real    0m0.117s
-user    0m0.014s
-sys     0m0.033s
 ```
-
+**sort3**
+```bash
+real    0m0.218s
+```
 # sorted50000.txt
-
+**sort1**
 ```bash
 real    0m0.520s
-user    0m0.036s
-sys     0m0.185s
 ```
-
+**sort2**
 ```bash
 real    0m0.533s
-user    0m0.055s
-sys     0m0.181s
 ```
+**sort3**
+```bash
+real    0m2.580s
+```
+
+# Conclusions
