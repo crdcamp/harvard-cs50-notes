@@ -115,46 +115,62 @@ Both halves are now sorted. Finally, the algorithm will merge both sides. It wil
 
 Program exits.
 
-Merge sort is a very efficient sort algorithm with a worst case of 𝑂⁡(𝑛⁢log⁡𝑛). The best case is still Ω⁡(𝑛⁢log⁡𝑛) because the algorithm still must visit each place in the list. Therefore, merge sort is also Θ⁡(𝑛⁢log⁡𝑛) since the best case and worst case are the same.
+Merge sort is a very efficient sort algorithm with a worst case of 𝑂(𝑛 log𝑛). The best case is still Ω(𝑛 log𝑛) because the algorithm still must visit each place in the list. Therefore, merge sort is also Θ(𝑛 log𝑛) since the best case and worst case are the same.
 
 [Here's the video](https://www.youtube.com/watch?v=Ns7tGNbtvV4&time_continue=125&source_ve_path=NzY3NTg&embeds_widget_referrer=https%3A%2F%2Fcs50.harvard.edu%2F&embeds_referring_euri=https%3A%2F%2Fvideo.cs50.io%2F&embeds_referring_origin=https%3A%2F%2Fvideo.cs50.io) on merge sort, and [here's a better one](https://www.youtube.com/watch?v=3j0SWDX4AtU) that goes beyond just four numbers to help you actually understand it.
 
+Now let's investigate the run times of `sort1` and `sort2` (in order of length):
+
 # random5000.txt
 
-`random5000.txt` contains 5000 `int`s in random order.
-
-**./sort1 random5000.txt**
-
-This command appears to sort the `int`s from least to greatest. Moreover, the resulting sort seems to confirm that the numbers do indeed range from 1-5000, and are in fact not just random `int`s, but instead are `int`s that are randomly ordered.
-
-**./sort2 random5000.txt**
-
-At first glance, `sort2` appears to do the same thing as `sort1` regarding `random5000.txt`. However, `sort2` does seem to run faster. In comparison, `sort1` is printing out the numbers in a seemingly linear manner, one by one. `sort2` does not seem to printing the numbers in this way.
-
-What it we were to time both of these using a bash command?
-
-(For what it's worth, I proudly came to this conclusion before reading the notes that say to do this!)
-
-## `sort1` vs. `sort2` time on `random5000.txt`
-
-Running `time ./sort1 random5000.txt` results in the following times:
+**sort1**
 
 ```bash
-real    0m0.071s
+real    0m0.072s
 user    0m0.048s
-sys     0m0.017s
+sys     0m0.021s
 ```
 
-Running `time ./sort2 random5000.txt` results in the following times:
-
+**sort2**
 
 ```bash
-real    0m0.028s
-user    0m0.005s
-sys     0m0.020s
+real    0m0.026s
+user    0m0.007s
+sys     0m0.016s
 ```
 
-When only considering `real` time (since that's the only one we care about), `sort2` is indeed running considerably faster (about twice as fast) than `sort1`.
+# random10000.txt
 
+***sort1***
 
-YOU CAN DETERMINE THE ALGORITHM TYPE BY COMPARING THE RUN TIMES BASED ON THE DATA SET SIZE!
+```bash
+real    0m0.207s
+user    0m0.152s
+sys     0m0.044s
+```
+
+**sort2**
+
+```bash
+real    0m0.061s
+user    0m0.011s
+sys     0m0.031s
+```
+
+# random50000.txt
+
+***sort1***
+
+```bash
+real    0m6.782s
+user    0m5.503s
+sys     0m0.213s
+```
+
+***sort2***
+
+```bash
+real    0m0.597s
+user    0m0.054s
+sys     0m0.164s
+```
