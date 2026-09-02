@@ -174,3 +174,95 @@ real    0m0.597s
 user    0m0.054s
 sys     0m0.164s
 ```
+
+# reversed5000.txt
+
+**sort1**
+
+```bash
+real    0m0.088s
+user    0m0.047s
+sys     0m0.024s
+```
+
+**sort2**
+
+```bash
+real    0m0.035s
+user    0m0.008s
+sys     0m0.013s
+```
+
+# reversed10000.txt
+
+**sort1**
+
+```bash
+real    0m0.268s
+user    0m0.198s
+sys     0m0.043s
+```
+
+**sort2**
+
+```bash
+real    0m0.078s
+user    0m0.008s
+sys     0m0.042s
+```
+
+# reversed50000.txt
+
+```bash
+real    0m7.494s
+user    0m5.883s
+sys     0m0.238s
+```
+
+```bash
+real    0m0.528s
+user    0m0.052s
+sys     0m0.175s
+```
+
+# sorted5000.txt
+
+```bash
+real    0m0.032s
+user    0m0.007s
+sys     0m0.019s
+```
+
+```bash
+real    0m0.032s
+user    0m0.006s
+sys     0m0.022s
+```
+
+# sorted10000.txt
+
+```bash
+real    0m0.087s
+user    0m0.011s
+sys     0m0.034s
+```
+
+```bash
+real    0m0.117s
+user    0m0.014s
+sys     0m0.033s
+```
+
+# sorted50000.txt
+
+```bash
+real    0m0.520s
+user    0m0.036s
+sys     0m0.185s
+```
+
+```bash
+real    0m0.533s
+user    0m0.055s
+sys     0m0.181s
+```

@@ -35,7 +35,7 @@ This could be translated to the following (still not actual code, but closer):
 ```pseudo
 For i from 0 to n-1
   If 50 is behind doors[i]
-    Return true
+    Return truez
 Return false
 ```
 
