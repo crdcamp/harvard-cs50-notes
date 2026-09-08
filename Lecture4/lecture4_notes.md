@@ -20,5 +20,4 @@ int main(void) {
     printf("*p: %i\n", *p);
     printf("*p address: %p\n", p);
 }
-
 ```
