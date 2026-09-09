@@ -10,6 +10,13 @@ int main (void) {
     printf("x is %i, y is %i\n", x, y);
     swap(x, y);
     printf("x is %i, y is %i\n", x, y);
+
+    printf("\n");
+
+    printf("x is %i, y is %i\n", x, y);
+    // You need to pass in the addresses of `x` and `y` using `&`
+    swap_fixed(&x, &y);
+    printf("x is %i, y is %i\n", x, y);
 }
 
 // This won't work as intended due to function scope
@@ -27,7 +34,7 @@ void swap(int a, int b) {
 // the memory addresses of the variables being passed
 // into the function, rather than working with copies of
 // the variables
-void swap_fixed(int *a, int *b) {
+void swap_fixed(int *a, int *b) { // The address of int a and the address of int b!
     int tmp = *a;
     *a = *b;
     *b = tmp;
