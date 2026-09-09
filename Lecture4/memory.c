@@ -1,13 +1,16 @@
 #include <stdio.h>
+#include <string.h>
 
 // NOTES AND EXAMPLES ON MEMORY IN C
 
 void pointer_basics(void);
 void strings(void);
+void string_comparisons(void);
 
 int main(void) {
     pointer_basics();
     strings();
+    string_comparisons();
 }
 
 // Display an introduction to pointers
@@ -75,10 +78,59 @@ void strings(void) {
     // Now `string` is the same thing as saying `char *`. Yippie!
 
     // We can also use "pointer arithmetic" to replicate what we
-    // accomplished above:
+    // the results from the above array notation:
     printf("String `s` elements printed with pointer arithmetic:\n");
     printf("%c\n", *s); // Remember that `*s` is simply the memory address of the first char of the string
     printf("%c\n", *(s + 1));
     printf("%c\n", *(s + 2));
     printf("%c\n", *(s + 3));
+
+    // We can further hammer in the fact that strings start with the
+    // first character and end with `\0` with the following:
+    printf("%s\n", s);
+    printf("%s\n", s + 1);
+    printf("%s\n", s + 2);
+    printf("%s\n", s + 3);
+
+    printf("\n");
+}
+
+void string_comparisons(void) {
+    printf("STRING COMPARISONS:\n");
+    // Let's say we have the following two strings:
+    char *s = "HI!";
+    char *t = "HI!";
+
+    // We want to compare them to find out if they're
+    // the same... but why in the hell wouldn't this work?
+    // Wait... this shouldn't work... but I'm almost certain that
+    // has something to do with different compilers between my IDE
+    // and the course's
+
+    // Anyway, the reason this shouldn't work (and the reason you should never compare strings
+    // using just `==`) is because (in the CS50's IDE) `s` and `t` are stored in different
+    // locations in the computer's memory. The variables themselves don't contain a string, but the address
+    // of the first character of that string.
+    // Therefore, both pointers to these addresses contain different identifiers for these pointer chars
+    // In other words, `s == t` compares pointers (the memory location), not the contents of the string
+    if (s == t) {
+        printf("Same\n");
+    }
+    else {
+        printf("Different\n");
+    }
+
+    // Let's just continue the example anyway
+    if (strcmp(s, t) == 0) {
+        printf("Same\n");
+    }
+    else {
+        printf("Different\n");
+    }
+
+    // Let's confirm the above notes by determining whether my compiler assigns both pointers
+    // to the same address
+    printf("`s` pointer address: %p\n", s);
+    printf("`t` pointer address: %p\n", t);
+    // What do ya know! The addresses are the same!
 }
