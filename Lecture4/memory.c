@@ -9,12 +9,16 @@ void pointer_basics(void);
 void strings(void);
 void string_comparisons(void);
 int malloc_demo(void);
+int malloc_demo_error_check(void);
+void garbage_values(void);
 
 int main(void) {
     pointer_basics();
     strings();
     string_comparisons();
     malloc_demo();
+    malloc_demo_error_check();
+    garbage_values();
 
     return 0;
 }
@@ -177,5 +181,40 @@ int malloc_demo(void) {
     // DON'T FORGET TO FREE UP THE MEMORY YOU ALLOCATED!!!
     free(t);
 
+    printf("\n");
+
     return 0;
+}
+
+int malloc_demo_error_check(void) {
+    // Memory allocation
+    int *x = malloc(3 * sizeof(int));
+    // Error checking
+    if (x == NULL) {
+        return 1;
+    }
+    // Assigning values to allocated memory
+    x[0] = 72;
+    x[1] = 73;
+    x[2] = 33;
+
+    // NEVER forget to free memory
+    free(x);
+
+    return 0;
+}
+
+void garbage_values(void) {
+    printf("GARBAGE VALUES:\n");
+
+    // So let's say we have a completely empty (and somewhat large)
+    // array like this:
+    int scores[1024];
+
+    // If we print the values of this empty array, we end up with essentially
+    // remnants from the computer's memory that are just left over from
+    // other processes
+    for (int i = 0; i < 5; i++) {
+        printf("%i\n", scores[i]);
+    }
 }
