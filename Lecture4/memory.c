@@ -8,7 +8,7 @@
 void pointer_basics(void);
 void strings(void);
 void string_comparisons(void);
-void malloc_demo(void);
+int malloc_demo(void);
 
 int main(void) {
     pointer_basics();
@@ -143,7 +143,8 @@ void string_comparisons(void) {
     printf("\n");
 }
 
-void malloc_demo(void) {
+int malloc_demo(void) {
+    printf("MALLOC OPERATIONS:\n");
     char *s = "hi!";
 
     // In order to copy this string, we need to copy `s` to somewhere else
@@ -151,15 +152,30 @@ void malloc_demo(void) {
     // as the string `s` takes up (in this case, 4 bytes including the null character)
     // (note that malloc is part of stdlib.h)
 
-    char *t = malloc(strlen(s) + 1); // malloc of 4 bytes of memory (+1 because of the `nul` character (\0))
+    char *t = malloc(strlen(s) + 1); // Allocate 4 bytes of memory to the newly created variable `t` (+1 because of the `nul` character (\0))
+    // We're also finally introducing error handling as well
+    // Keep in mind that NULL is a specially reserved place in memory at 0
+    // meant for things like this
+    if (t == NULL) {
+        return 1;
+    }
+
 
     // Now let's copy the contents of `s` into `t`
-    for (int i = 0; i < strlen(s); i++) {
+    for (int i = 0, n = strlen(s); i <= n; i++) { // We use `<=` here since we want to include the null character \0
         t[i] = s[i];
     }
 
     // Now let's confirm that edits to `t` only apply to `t`
-    t[0] = toupper(t[0]);
+    if (strlen(s) > 0) { // We only would want to convert to upper if there's actually a string to do so with
+        t[0] = toupper(t[0]);
+    }
+
     printf("s: %s\n", s);
     printf("t: %s\n", t);
+
+    // DON'T FORGET TO FREE UP THE MEMORY YOU ALLOCATED!!!
+    free(t);
+
+    return 0;
 }
