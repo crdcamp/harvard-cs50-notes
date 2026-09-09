@@ -1,16 +1,22 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 // NOTES AND EXAMPLES ON MEMORY IN C
 
 void pointer_basics(void);
 void strings(void);
 void string_comparisons(void);
+void malloc_demo(void);
 
 int main(void) {
     pointer_basics();
     strings();
     string_comparisons();
+    malloc_demo();
+
+    return 0;
 }
 
 // Display an introduction to pointers
@@ -133,4 +139,27 @@ void string_comparisons(void) {
     printf("`s` pointer address: %p\n", s);
     printf("`t` pointer address: %p\n", t);
     // What do ya know! The addresses are the same!
+
+    printf("\n");
+}
+
+void malloc_demo(void) {
+    char *s = "hi!";
+
+    // In order to copy this string, we need to copy `s` to somewhere else
+    // in memory. Therefore, we need to ask the computer for as much memory
+    // as the string `s` takes up (in this case, 4 bytes including the null character)
+    // (note that malloc is part of stdlib.h)
+
+    char *t = malloc(strlen(s) + 1); // malloc of 4 bytes of memory (+1 because of the `nul` character (\0))
+
+    // Now let's copy the contents of `s` into `t`
+    for (int i = 0; i < strlen(s); i++) {
+        t[i] = s[i];
+    }
+
+    // Now let's confirm that edits to `t` only apply to `t`
+    t[0] = toupper(t[0]);
+    printf("s: %s\n", s);
+    printf("t: %s\n", t);
 }
