@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+// NOTES AND EXAMPLES ON MEMORY IN C
+
 void pointer_basics(void);
 void strings(void);
 
@@ -45,14 +47,38 @@ void strings(void) {
     // that the program must "point" to. The pointer here tells us
     // where the string begins, while `\0` tells us where it ends
 
+    // A string's pointer value will always be the first element in
+    // the array of chars. This is simply a convention that people
+    // came up with
+
     // Let's finally look at an example:
-    char s[] = "HI!";
+    char *s = "HI!";
+    // `char *s` has been a synonym for `string` this entire time!
+    // What this really means is that "`s` is the address of a `char`"
 
     // We can show that the addresses of each element
-    // follow a iterative pattern in memory
-    printf("String `s` addresses:\n");
+    // follows a iterative pattern in memory
+    // Also note that all strings's memory address begins
+    // with the first element in their array
+    printf("String `s` element addresses:\n");
     printf("%p\n", &s[0]);
     printf("%p\n", &s[1]);
     printf("%p\n", &s[2]);
     printf("%p\n", &s[3]);
+
+    printf("\n");
+
+    // You might be wondering "How the hell did they declare their
+    // own `string` type in cs50.h?" Well, turns out you can just
+    // use typedef for that:
+    typedef char *string;
+    // Now `string` is the same thing as saying `char *`. Yippie!
+
+    // We can also use "pointer arithmetic" to replicate what we
+    // accomplished above:
+    printf("String `s` elements printed with pointer arithmetic:\n");
+    printf("%c\n", *s); // Remember that `*s` is simply the memory address of the first char of the string
+    printf("%c\n", *(s + 1));
+    printf("%c\n", *(s + 2));
+    printf("%c\n", *(s + 3));
 }
