@@ -419,12 +419,12 @@ int main(void) {
     for (int i = 0; i < N; i++) {
         scores[i] = get_int("Score: ");
     }
-    
+
     printf("Average: %f\n", average(N, scores)); // We're assuming we already have an average function here
 }
 
 float average(int length, int numbers[]) {
-    int sum = 0;  
+    int sum = 0;
     for (int i = 0; i < length; i++) {
         sum += numbers[i];
     }
@@ -580,7 +580,7 @@ Now the first fix that came to mind was declaring `strlen(s)` before the loop:
 int main(void) {
     string s = get_string("Input: ");
     length = strlen(s);
-    
+
     for (int i = 0; i < length; i++) {
         printf("%c", s[i]);
     }
@@ -597,7 +597,7 @@ While this is certainly better, we have a third option where we can declare mult
 
 int main(void) {
     string s = get_string("Input: ");
-    
+
     for (int i = 0, length = strlen(s); i < length; i++) {
         printf("%c", s[i]);
     }
@@ -619,7 +619,7 @@ I didn't write this part down, but the professor converted letters to uppercase 
 
 int main(void) {
     string s = get_string("Input: ");
-    
+
     for (int i = 0, length = strlen(s); i < length; i++) {
         if (islower(s[i])) {
             printf("%c", toupper(s[i]));
@@ -660,7 +660,7 @@ int main(int argc, string argv[]) {
 
 We did `argv[1]` instead of `argv[0]` **because `argv[0]` automatically contains the program's own name**. You can use this to refer to your own project in outputs.
 
-Also a quick reminder that `argc` contains the number of arguments. **The first argument is always the program name**, which is why we're specifying `if (argc != 2)`. So if you want to require a single argument from the user you could do it like this: 
+Also a quick reminder that `argc` contains the number of arguments. **The first argument is always the program name**, which is why we're specifying `if (argc != 2)`. So if you want to require a single argument from the user you could do it like this:
 
 ```c
 #include <cs50.h>
