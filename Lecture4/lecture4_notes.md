@@ -424,4 +424,36 @@ int main(void)
 }
 ```
 
-Note tha if the provide string is greater than 4 bytes you might get an error.
+Note that if the provide string is greater than 4 bytes you might get an error.
+
+# Defining Our Own Data Types
+
+* The C keyword `typedef` provides a way to create a shorthand or rewritten name for data types.
+* The basic idea is to first define a type in the normal way, then alias it to something else.
+
+Here's an example
+
+```c
+typedef unsigned char byte;
+```
+
+Now we can just use `byte` instead of `unsigned char`. Remember this example?
+
+```c
+typedef char * string
+```
+
+Since a string is simply a pointer to the first element in an array of `char`s, this "just works" ~ Todd Howard (thank you Todd Howard).
+
+`typedef` becomes a bit more powerful when you start combining it with `struct`s. Structures have a two word type name, so they can be a bit annoying to work with. We can use `typedef` to streamline things a bit.
+
+```c
+struct car {
+    int year;
+    char model[10];
+    char plate[7];
+    int odometer;
+    double engine_size;
+};
+typedef struct car car_t;
+```
