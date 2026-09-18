@@ -5,7 +5,7 @@ void increment(int *a);
 // Create a function increment_value that takes an integer
 // pointer as an argument and increments the value of the
 // variable it points to by one. Demonstrate the change in
-//the main function.
+// the main function.
 int main(void) {
     int count = 10;
     printf("Before function call: %i\n", count);

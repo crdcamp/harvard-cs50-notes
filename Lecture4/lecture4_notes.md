@@ -1,3 +1,11 @@
+# Links
+
+* [Lecture Video]()
+* [Lecture Notes](https://cs50.harvard.edu/x/notes/4/)
+* [Pointer Practice](https://pynative.com/c-programming-pointers-exercises/)
+* [Malloc Practice]()
+* [CS50 Manual Pages](https://manual.cs50.io/)
+
 # Memory
 
 # Hexadecimal
@@ -125,6 +133,51 @@ int main(void)
 ```
 
 Pretty simple stuff (that could probably lead into some extremely complex applications).
+
+## More on Pointers
+
+[Source Video](https://www.youtube.com/watch?v=XISnO2YhnsY&time_continue=626&source_ve_path=MjE0Mjgz&embeds_widget_referrer=https%3A%2F%2Fcs50.harvard.edu%2F&embeds_referring_euri=https%3A%2F%2Fvideo.cs50.io%2F&embeds_referring_origin=https%3A%2F%2Fvideo.cs50.io)
+
+* Keep in mind that memory (RAM) is essentially a giant array of byte-sized cells.
+* Similar to how we can access individual elements of an array by indicating which index location we want, we can do the same with the **addresses** in memory.
+
+There's only one critical thing to remember about pointers: **pointers are just addresses!**
+
+* A pointer is a data item whose *value* is a memory address and *type* describes the data located at that memory address.
+* As such, pointers allow data structures and/or variables to be shared among functions.
+* Pointers make the *computer environment more like the real world*.
+
+### Creating Pointers
+
+The simplest pointer available to us in C is the `NULL` pointer,  which (obviously) points to nothing.
+
+* When you create a pointer and you don't set its value immediately, you should **always** set the value of the pointer to `NULL`.
+* You can check whether a pointer is `NULL` using the equality operator `==`.
+
+Another easy way to create a pointer is to simply **extract** the address of an already existing variable. We can do this with the address extraction operator `&`
+
+* If `x` is an `int`-type variable, then `&x` is a pointer-to`int` whose value is the address of `x`.
+* If `arr` is an array of `double`s, then `&arr[i]` is a pointer-to-double whose value is the address of the `i`th element of `arr`.
+* An array's name, then, is actually just **a pointer to its first element**, just like what we covered with strings. In summary, **an array's name is just a pointer**.
+
+### The Purpose of Pointers
+
+The main purpose of a pointer is to allow us to modify or inspect the location to which it points. We do this by **dereferencing** the pointer.
+
+If we have a pointer-to-`char` called `pc`, then `*pc` is the data that lives at the memory address stored inside the variable `pc`.
+
+**In summary:**
+* `*` gives us the actual data we're pointing to. This is the **dereferencing** part. Thus, `*` is called the **dereference operator**.
+* `&` gives us the address of the data in memory.
+* `*` *goes to the reference* and accesses the data at that memory location, allowing you to manipulate it at will.
+
+### Pointing to NULL
+
+We mentioned earlier that if we create a pointer and don't use its value immediately we should always set the value of the pointer to `NULL`.
+
+However, **if we try to dereference a pointer whose value is `NULL` it results in a segmentation fault**.
+
+This is actually a good behavior, since it defends against accidental dangerous manipulation of unknown pointers. You'd rather have your program crash than manipulate data in an unintended manner.
 
 # String Comparison
 

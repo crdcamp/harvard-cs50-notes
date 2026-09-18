@@ -13,6 +13,6 @@ void print_each_line(char *message) {
     char *m_p = message;
     while (*m_p != '\0') {
         printf("%c\n", *m_p);
-        m_p++; // Iterate to next char
+        m_p++; // Iterate to next pointer to get the next char
     }
 }
