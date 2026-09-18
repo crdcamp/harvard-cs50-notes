@@ -498,3 +498,32 @@ fread() fwrite()
 ```c
 FILE* ptr = fopen(<filename>, <operation>);
 ```
+
+You can use the `"r"`, `"w"`, or `"a"` operation when opening a file. You're already familiar with all these.
+
+**`fclose()`**
+
+Simply closes the file (duh).
+
+```c
+fclose(<file_pointer>);
+```
+
+**`fgetc()`**
+
+* Reads and returns the next character from the file pointed to.
+* Note: The operation of the file pointer passed in as a parameter must be `"r"` for read, or you will get an error.
+
+```c
+char ch = fgetc(<file_pointer>);
+```
+
+The ability to get single characters from files, if wrapped in a loop, means we could read all the characters from a file and print them to the screen, one-by-one, essentially:
+
+```c
+char ch;
+while((ch = fgetc(ptr)) != EOF)
+    printf("%c", ch);
+```
+
+We might put this in a file called `cat.c` after the Linux command `cat` which essentially does just this.
