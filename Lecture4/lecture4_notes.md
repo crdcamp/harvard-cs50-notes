@@ -457,3 +457,44 @@ struct car {
 };
 typedef struct car car_t;
 ```
+
+You can also do it this way as well (which is clearly the recommended syntax for structs):
+
+```c
+typdef struct car {
+    int year;
+    char model[10];
+    char plate[7];
+    int odometer;
+    double engine_size;
+} car_t;
+```
+
+Very nice. Very useful.
+
+# File Pointers
+
+* The ability to read data from and write data to files is the primary means of storing **persistent data**.
+* The abstraction of files that C provides is implemented in a data structure known as `FILE`.
+* Almost universally when working with files, we'll be using pointers to them, `FILE*`.
+
+Generally, while *pointers* and *file pointers* might be related, they are ultimately two different things. So just keep that in mind.
+
+The file manipulation functions all live in `stdio.h`. All of them accept `FILE*` as one of their parameters, except for the function `fopen()`, which is used to get a file pointer in the first place.
+
+Some of the most common input/output functions that we'll be working on are:
+
+```c
+fopen() fclose()
+fgetc() fputc()
+fread() fwrite()
+```
+
+**`fopen()`**
+
+* `fopen()` (obviously) opens a file and returns a pointer to it.
+* You always want to check the return value to make sure you don't get back `NULL`.
+
+```c
+FILE* ptr = fopen(<filename>, <operation>);
+```
