@@ -15,6 +15,7 @@ int sort_example(void);
 int main(void) {
     og_example();
     append_example();
+    sort_example();
 }
 
 void unload(node *list) {
