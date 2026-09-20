@@ -1,7 +1,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-
+// THIS IS ALL A PRECURSOR TO `linked_list.c`
 void print_int_array(char *message, int *array, int array_len);
 
 int main(void) {
