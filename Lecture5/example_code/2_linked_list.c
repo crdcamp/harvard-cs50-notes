@@ -1,18 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int og_example(void);
-int append_example(void);
-int sort_example(void);
 
 typedef struct node {
     int number;
     struct node *next;
 } node;
 
+void unload(node *list);
+int og_example(void);
+int append_example(void);
+int sort_example(void);
+
 int main(void) {
     og_example();
     append_example();
+}
+
+void unload(node *list) {
+    node *ptr = list;
+    while (ptr != NULL) {
+        node *next = ptr->next;
+        free(ptr);
+        ptr = next;
+    }
 }
 
 int og_example(void) {
@@ -31,6 +42,7 @@ int og_example(void) {
         // So, just always interpret `*n` as a memory address (this is important further down)
         node *n = malloc(sizeof(node));
         if (n == NULL) {
+            unload(list);
             return 1;
         }
 
@@ -93,6 +105,7 @@ int append_example(void) {
     for (int i = 0; i < 3; i++) {
         node *n = malloc(sizeof(node));
         if (n == NULL) {
+            unload(list);
             return 1;
         }
 
@@ -145,6 +158,7 @@ int sort_example(void) {
     for (int i = 0; i < 3; i++) {
         node *n = malloc(sizeof(node));
         if (n == NULL) {
+            unload(list);
             return 1;
         }
 
