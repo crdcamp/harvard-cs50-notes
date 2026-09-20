@@ -154,6 +154,20 @@ The simplest pointer available to us in C is the `NULL` pointer,  which (obvious
 * When you create a pointer and you don't set its value immediately, you should **always** set the value of the pointer to `NULL`.
 * You can check whether a pointer is `NULL` using the equality operator `==`.
 
+Essentially, you're using `NULL` for error handling like so:
+
+```c
+#include <stdlib.h>
+
+int main(void {
+    char *s = "meow";
+    char *t = malloc(strlen(s) + 1);
+    if (t == NULL) {
+        return 1;
+    }
+}
+```
+
 Another easy way to create a pointer is to simply **extract** the address of an already existing variable. We can do this with the address extraction operator `&`
 
 * If `x` is an `int`-type variable, then `&x` is a pointer-to`int` whose value is the address of `x`.
@@ -178,6 +192,8 @@ We mentioned earlier that if we create a pointer and don't use its value immedia
 However, **if we try to dereference a pointer whose value is `NULL` it results in a segmentation fault**.
 
 This is actually a good behavior, since it defends against accidental dangerous manipulation of unknown pointers. You'd rather have your program crash than manipulate data in an unintended manner.
+
+
 
 # String Comparison
 
@@ -527,3 +543,51 @@ while((ch = fgetc(ptr)) != EOF)
 ```
 
 We might put this in a file called `cat.c` after the Linux command `cat` which essentially does just this.
+
+**`fputc()`**
+
+Do you really need an explanation here? Anyway, you can essentially duplicate the `cp` command like this using `fputc()`
+
+```c
+char ch;
+while ((ch = fgetc(ptr)) != EOF)
+    fputc(ch, ptr2);
+```
+
+**`fread`**
+* Reads `<qty>` units of size `<size">` from the file pointed to ad stores them in memory in a buffer (usually an array) pointed to be `<buffer>`.
+* Note: The operation of the file pointer passed in as a parameter must be `"r"` for read.
+
+```c
+fread(<buffer>, <size>, <qty>, <file_pointer>);
+```
+
+Let's say we declared an array of 10 `int`s:
+
+```c
+int arr[10]
+fread(arr, sizeof(int), 10, ptr);
+```
+
+We're reading data from `ptr` and storing it in `arr`. Note that when we pass in `arr` we are effectively just passing a pointer.
+
+This is how we'd create a buffer for the file before ever doing anything with the data:
+
+```c
+// * 80 because we just decided that's how many doubles we wanted space for
+double* arr2 = malloc(sizeof(double) * 80);
+fread(arr2, sizeof(double), 80, ptr);
+```
+
+If we just have a variable, then for `fread()` to process it, we need to pass the *address* of that variable:
+
+```c
+char c;
+fread(&c, sizeof(char), 1, ptr);
+```
+
+Remember how an array is a pointer? Well a lonely lil variable like this one is not. So, you need to provide its address.
+
+**`fwrite`**
+
+I'm sure you can make conclusions on how the rest of this works.
