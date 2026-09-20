@@ -3,6 +3,7 @@
 
 int og_example(void);
 int append_example(void);
+int sort_example(void);
 
 typedef struct node {
     int number;
@@ -96,7 +97,7 @@ int append_example(void) {
         }
 
         n->number = i + 1; // Assign an `int` to `number`
-        n->next = NULL; // Mostly a safety precaution at this point
+        n->next = NULL; // Mostly a safety precaution just to ensure next has something associated with it
         n->next = list; // Assign `list`'s address to `next`
         list = n; // Assign `n`'s address to `list`
 
@@ -133,6 +134,43 @@ int append_example(void) {
         ptr = next;
     }
     printf("\n\n");
+
+    return 0;
+}
+
+int sort_example(void) {
+    printf("SORT EXAMPLE\n");
+    node *list = NULL;
+
+    for (int i = 0; i < 3; i++) {
+        node *n = malloc(sizeof(node));
+        if (n == NULL) {
+            return 1;
+        }
+
+        n->number = rand();
+        n->next = NULL;
+        n->next = list;
+        list = n;
+
+        // SORT VALUES
+        if (list == NULL) {
+            list = n;
+        }
+
+        // If number belongs at the beginning of the list
+        else if (n->number > list->number) {
+            n->next = list;
+            list = n;
+        }
+
+        // If number belongs later in the list
+        else {
+
+        }
+
+    }
+
 
     return 0;
 }
