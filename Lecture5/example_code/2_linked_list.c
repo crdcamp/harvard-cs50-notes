@@ -28,7 +28,7 @@ int main(void) {
         // (previously we used `(*n).number` instead of `n->number` which is what the next line is referring to)
         // The ()s are used because of precedence. You need to dereference `n` before you actually access the value.
         n->number = i++;
-        n->next = NULL; // Unnecessary line since in the next line you're already effectively doing this in the first iteration
+        n->next = NULL; // Unnecessary line since in the next line you're already effectively doing this in the first iteration (probably best to leave it like this though)
 
         // PREPEND node to list: We're setting this up in a way that the memory can be traced backwards (like a mf trail of breadcrumbs)
         // This way NULL ends up being at the end of the linked list, thus giving us a way
@@ -39,10 +39,14 @@ int main(void) {
         // When the looping is finished, this is essentially our
         // entry point for accessing the list
         list = n; // Assign the address of `n` to `list`
+    }
 
-        // Don't you ever fucking forget to free memory, otherwise you're no
-        // better than Bethesda
-        free(n);
+    // Now let's print the numbers
+    node *ptr = list;
+    while (ptr != NULL) {
+        printf("Number:  %i\n", ptr->number);
+        printf("Address: %p\n", ptr->next);
+        ptr = ptr->next;
     }
 
     return 0;
