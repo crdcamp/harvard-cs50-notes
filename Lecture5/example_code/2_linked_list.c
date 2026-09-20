@@ -166,11 +166,30 @@ int sort_example(void) {
 
         // If number belongs later in the list
         else {
+            for (node *ptr = list; ptr != NULL; ptr = ptr->next) {
+                // If at end of list
+                if (ptr->next == NULL) {
+                    // Append node
+                    ptr->next = n;
+                    break;
+                }
 
+                // If in middle of list
+                if (n->number < ptr->next->number) {
+                    n->next = ptr->next;
+                    ptr->next = n;
+                    break;
+                }
+            }
         }
-
     }
 
-
+    // Free memory
+    node *ptr = list;
+    while (ptr != NULL) {
+        node *next = ptr->next;
+        free(ptr);
+        ptr = next;
+    }
     return 0;
 }
