@@ -27,7 +27,7 @@ int main(void) {
         // Go to the address of n, go inside that node, and store a value in `number`
         // (previously we used `(*n).number` instead of `n->number` which is what the next line is referring to)
         // The ()s are used because of precedence. You need to dereference `n` before you actually access the value.
-        n->number = i++;
+        n->number = i + 1; // Note that `i++` wouldn't work here and would instead actually edit the original `i`
         n->next = NULL; // Unnecessary line since in the next line you're already effectively doing this in the first iteration (probably best to leave it like this though)
 
         // PREPEND node to list: We're setting this up in a way that the memory can be traced backwards (like a mf trail of breadcrumbs)
@@ -41,12 +41,23 @@ int main(void) {
         list = n; // Assign the address of `n` to `list`
     }
 
-    // Now let's print the numbers
+    // Now let's print the numbers (also demonstrates how you can access values in the list)
     node *ptr = list;
+    printf("WHILE LOOP RESULTS:\n");
     while (ptr != NULL) {
         printf("Number:  %i\n", ptr->number);
         printf("Address: %p\n", ptr->next);
         ptr = ptr->next;
+    }
+
+    printf("\n\n");
+
+    // I definitely prefer (as most would) the while loop, but here's how you could
+    // do it with a for loop. Help paint the picture a bit more as well.
+    printf("FOR LOOP RESULTS:\n");
+    for (node *ptr = list; ptr != NULL; ptr = ptr->next) {
+        printf("Number:  %i\n", ptr->number);
+        printf("Address: %p\n", ptr->next);
     }
 
     return 0;
