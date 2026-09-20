@@ -28,7 +28,7 @@ int main(void) {
         // (previously we used `(*n).number` instead of `n->number` which is what the next line is referring to)
         // The ()s are used because of precedence. You need to dereference `n` before you actually access the value.
         n->number = i++;
-        n->next = NULL;
+        n->next = NULL; // Unnecessary line since in the next line you're already effectively doing this in the first iteration
 
         // PREPEND node to list: We're setting this up in a way that the memory can be traced backwards (like a mf trail of breadcrumbs)
         // This way NULL ends up being at the end of the linked list, thus giving us a way
