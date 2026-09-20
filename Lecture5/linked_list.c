@@ -20,6 +20,7 @@ int main(void) {
         if (n == NULL) {
             return 1;
         }
+
         // Go to the address of n, go inside that node, and store a value
         // (previously we used `(*n).number` instead of `n->number` which is what the next 2 lines are referring to)
         // The ()s are used because of precedence. You need to dereference `n`
@@ -32,8 +33,11 @@ int main(void) {
         // thus giving us a way (similar to `\0` does) to determine that
         // we've reached the end of the list
         // Assign the address of `list` to `n`
+        // We're essentially updating `next` for the next iteration
         n->next = list;
         // Assign the address of `n` to `list`
+        // When the looping is finished, this is essentially our
+        // entry point for accessing the list
         list = n;
     }
     return 0;
