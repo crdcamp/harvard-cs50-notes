@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 int og_example(void);
-int more_example(void);
+int append_example(void);
 
 typedef struct node {
     int number;
@@ -11,9 +11,11 @@ typedef struct node {
 
 int main(void) {
     og_example();
+    append_example();
 }
 
 int og_example(void) {
+    printf("OG EXAMPLE\n");
     // Create an empty list
     // The list points to nothing (just to initiate the list so we can then use it in the following loop)
     node *list = NULL;
@@ -67,6 +69,14 @@ int og_example(void) {
         printf("Address: %p\n", ptr->next);
     }
 
+    // Free memory
+    while (ptr != NULL) {
+        node *next = ptr->next;
+        free(ptr);
+        ptr = next;
+    }
+    printf("\n\n");
+
     return 0;
 }
 
@@ -75,7 +85,8 @@ int og_example(void) {
 // - Prepend
 // - Append
 // - Inserting a new node (number) at a desired place in the list
-int more_example(void) {
+int append_example(void) {
+    printf("APPEND EXAMPLE\n");
     node *list = NULL;
 
     for (int i = 0; i < 3; i++) {
@@ -84,13 +95,44 @@ int more_example(void) {
             return 1;
         }
 
-        n->number = i + 1;
-        n->next = NULL;
+        n->number = i + 1; // Assign an `int` to `number`
+        n->next = NULL; // Mostly a safety precaution at this point
+        n->next = list; // Assign `list`'s address to `next`
+        list = n; // Assign `n`'s address to `list`
 
-        n->next = list;
-        list = n;
-
+        // APPEND A VALUE
+        // If the list is empty, then we can simply make it `n`
+        if (list == NULL) {
+            list = n;
+        }
+        else {
+            // Iterate over nodes in list
+            for (node *ptr = list; ptr != NULL; ptr = ptr->next) {
+                // If at end of list
+                if (ptr->next == NULL) {
+                    // Append node
+                    ptr->next = n;
+                    break;
+                }
+            }
+        }
     }
+
+    // Print results
+    node *ptr = list;
+    while (ptr != NULL) {
+        node *next = ptr->next;
+        free(ptr);
+        ptr = next;
+    }
+
+    // Free memory
+    while (ptr != NULL) {
+        node *next = ptr->next;
+        free(ptr);
+        ptr = next;
+    }
+    printf("\n\n");
 
     return 0;
 }
