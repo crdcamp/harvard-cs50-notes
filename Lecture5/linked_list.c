@@ -7,38 +7,43 @@ typedef struct node {
 } node;
 
 int main(void) {
-    // Create an empty list (essentially synonymous with a "dynamic array")
-    node *list = NULL; // The list points to nothing (just to initiate the list)
+    // Create an empty list
+    // The list points to nothing (just to initiate the list so we can then use it in the following loop)
+    node *list = NULL;
 
     for (int i = 0; i < 3; i++) {
-        // First we need to allocate a new node
-        // Create one new node, store a value in it, and then point the list at the node
+        // First we need to allocate memory for a new node
         // Allocate space for the size of a new node (we use `node *` because we want to point to the memory of an actual node)
         // EVERY TIME YOU CALL MALLOC ITS ASSIGNING A NEW MEMORY LOCATION, so.....
-        // that's why we can just keep reusing `n` here as `malloc` has this implicit behavior
+        // that's why we can just keep reusing `n` here, as `malloc` has this implicit behavior\
+
+        // Also remember that `malloc` returns the address of the first byte of the block of memory,
+        // So, just always interpret `*n` as a memory address (this is important further down)
         node *n = malloc(sizeof(node));
         if (n == NULL) {
             return 1;
         }
 
-        // Go to the address of n, go inside that node, and store a value
-        // (previously we used `(*n).number` instead of `n->number` which is what the next 2 lines are referring to)
-        // The ()s are used because of precedence. You need to dereference `n`
-        // before you actually access the value.
+        // Go to the address of n, go inside that node, and store a value in `number`
+        // (previously we used `(*n).number` instead of `n->number` which is what the next line is referring to)
+        // The ()s are used because of precedence. You need to dereference `n` before you actually access the value.
         n->number = i++;
         n->next = NULL;
 
-        // PREPEND node to list
-        // This way NULL ends up being at the end of the linked list,
-        // thus giving us a way (similar to `\0` does) to determine that
-        // we've reached the end of the list
-        // Assign the address of `list` to `n`
-        // We're essentially updating `next` for the next iteration
-        n->next = list;
-        // Assign the address of `n` to `list`
+        // PREPEND node to list: We're setting this up in a way that the memory can be traced backwards (like a mf trail of breadcrumbs)
+        // This way NULL ends up being at the end of the linked list, thus giving us a way
+        // (similar to how `\0` does in a string) to determine that we've reached the end of the list
+        // We're essentially updating `next` for the next iteration so we can "backtrack" later
+        n->next = list; // Assign the address of `list` to `n`
+
         // When the looping is finished, this is essentially our
         // entry point for accessing the list
-        list = n;
+        list = n; // Assign the address of `n` to `list`
+
+        // Don't you ever fucking forget to free memory, otherwise you're no
+        // better than Bethesda
+        free(n);
     }
+
     return 0;
 }
