@@ -1,12 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int og_example(void);
+int more_example(void);
+
 typedef struct node {
     int number;
     struct node *next;
 } node;
 
 int main(void) {
+    og_example();
+}
+
+int og_example(void) {
     // Create an empty list
     // The list points to nothing (just to initiate the list so we can then use it in the following loop)
     node *list = NULL;
@@ -41,7 +48,7 @@ int main(void) {
         list = n; // Assign the address of `n` to `list`
     }
 
-    // Now let's print the numbers (also demonstrates how you can access values in the list)
+    // Now let's print the numbers
     node *ptr = list;
     printf("WHILE LOOP RESULTS:\n");
     while (ptr != NULL) {
@@ -53,11 +60,36 @@ int main(void) {
     printf("\n\n");
 
     // I definitely prefer (as most would) the while loop, but here's how you could
-    // do it with a for loop. Help paint the picture a bit more as well.
+    // do it with a for loop. Helps paint the picture a bit more as well.
     printf("FOR LOOP RESULTS:\n");
     for (node *ptr = list; ptr != NULL; ptr = ptr->next) {
         printf("Number:  %i\n", ptr->number);
         printf("Address: %p\n", ptr->next);
+    }
+
+    return 0;
+}
+
+// Now that we've created a linked list and printed it, we want to start thinking
+// about how we'd go about editing it. We want to be able to:
+// - Prepend
+// - Append
+// - Inserting a new node (number) at a desired place in the list
+int more_example(void) {
+    node *list = NULL;
+
+    for (int i = 0; i < 3; i++) {
+        node *n = malloc(sizeof(node));
+        if (n == NULL) {
+            return 1;
+        }
+
+        n->number = i + 1;
+        n->next = NULL;
+
+        n->next = list;
+        list = n;
+
     }
 
     return 0;
