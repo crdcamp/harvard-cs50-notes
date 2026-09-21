@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 typedef struct node {
     int number;
     struct node *next;
@@ -94,11 +93,6 @@ int og_example(void) {
     return 0;
 }
 
-// Now that we've created a linked list and printed it, we want to start thinking
-// about how we'd go about editing it. We want to be able to:
-// - Prepend
-// - Append
-// - Inserting a new node (number) at a desired place in the list
 int append_example(void) {
     printf("APPEND EXAMPLE\n");
     node *list = NULL;
