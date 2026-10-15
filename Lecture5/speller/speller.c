@@ -7,7 +7,7 @@
 
 #include "dictionary.h"
 
-// Undefine any definitions
+// Undefine any definitions. Why do we do this?
 #undef calculate
 #undef getrusage
 
@@ -30,12 +30,17 @@ int main(int argc, char *argv[])
     struct rusage before, after;
 
     // Benchmarks
+    // Turns out, you can define multiple variables in a single line
     double time_load = 0.0, time_check = 0.0, time_size = 0.0, time_unload = 0.0;
 
     // Determine dictionary to use
+    // `?` explanation: (test) ? (when-true) : (when-false)
+    // This is essentially how you set a default command parameter in C! (might wanna use this in `transfer-to-external-drive`)
     char *dictionary = (argc == 3) ? argv[1] : DICTIONARY;
 
     // Load dictionary
+    // `rusage` seems to come from either <sys/resource.h> or include <sys/time.h>
+    // We'll dig into that more a bit later, but it's most likely part of `time.h`
     getrusage(RUSAGE_SELF, &before);
     bool loaded = load(dictionary);
     getrusage(RUSAGE_SELF, &after);
@@ -65,13 +70,15 @@ int main(int argc, char *argv[])
 
     // Prepare to spell-check
     int index = 0, misspellings = 0, words = 0;
-    char word[LENGTH + 1];
+    char word[LENGTH + 1]; // Remember that `LENGTH` was defined in `dictionary.h`
 
     // Spell-check each word in text
+    // We're reading the file character by character here
     char c;
     while (fread(&c, sizeof(char), 1, file))
     {
         // Allow only alphabetical characters and apostrophes
+        // What's the backslash `\` for?
         if (isalpha(c) || (c == '\'' && index > 0))
         {
             // Append character to word
