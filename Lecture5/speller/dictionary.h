@@ -1,5 +1,14 @@
 // Declares a dictionary's functionality
 
+// `#ifndef` is a conditional compilation of parts of the source file.
+// It is essentially equivalent to `#if !defined`: https://devdocs.io/c/preprocessor/conditional
+// This is optionally followed by any number of `#elif`, `elifdef`, or
+// `elifndef` directives, then optionally includes at most one `#else`
+
+// So, it essentially just says "if `DICTIONARY_H` is not defined, define it"
+// This could be either some form of safer programming or some way to ensure
+// that changes that happen during runtime don't carry over to here... or
+// something else entirely. This will probably become clearer later
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
 
@@ -10,6 +19,7 @@
 #define LENGTH 45
 
 // Prototypes
+// All these functions are found in `dictionary.c`
 bool check(const char *word);
 unsigned int hash(const char *word);
 bool load(const char *dictionary);
