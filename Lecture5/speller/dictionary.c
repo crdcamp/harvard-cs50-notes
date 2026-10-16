@@ -65,7 +65,16 @@ bool load(const char *dictionary)
     char word;
     char word_buffer[LENGTH];
     while ((ch = fgetc(dictionary_file)) != EOF) {
-        hash(fgets(word_buffer, sizeof(word_buffer), dictionary_file));
+        // `fgets` reads an entire line, including whitespace, until a newline,
+        // EOF, or size limit is reached
+        // Define a word using `fgets`
+        char *word = fgets(word_buffer, sizeof(word_buffer), dictionary_file);
+        if (word == NULL) {
+            printf("Error using `fgets` when loading dictionary `%s`\n", dictionary);
+        }
+
+        // Add the word to the hash table
+        hash(word);
     }
 
     // Close the dictionary file
