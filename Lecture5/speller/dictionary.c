@@ -2,6 +2,8 @@
 // You don't need to edit anything in this file
 #include <ctype.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "dictionary.h"
 
@@ -42,9 +44,33 @@ unsigned int hash(const char *word)
 }
 
 // Loads dictionary into memory, returning true if successful, else false
+// THIS IS A VERY VERY SLOW WAY TO DO THIS, BUT IT'S A START!
+// Think... there's gotta be a way to do this without looping through
+// the entire dictionary twice......
 bool load(const char *dictionary)
 {
-    // TODO
+    // Create a file pointer
+    FILE *file_pointer = fopen(dictionary, "r");
+    if (file_pointer == NULL) {
+        printf("Error opening file\n");
+        return false;
+    }
+
+    char ch;
+    size_t size = 1; // Add 1 to account for null string terminator
+
+    // Calculate size of dictionary needed for memory
+    while((ch = fgetc(file_pointer)) != EOF) {
+        size++;
+    }
+
+    // Allocate memory for the dictionary
+    dictionary = malloc((size));
+    if (dictionary == NULL) {
+        printf("Error allocating memory for %s\n", dictionary);
+        return false;
+    }
+
     return false;
 }
 
