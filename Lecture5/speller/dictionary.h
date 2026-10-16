@@ -16,6 +16,7 @@
 // make a lot more sense as well. It's essentially to help performance. It prevents
 // double declarations of macros when a header file is included in multiple files
 // across a single project
+// Very useful knowledge indeed yes mmmmmmm
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
 

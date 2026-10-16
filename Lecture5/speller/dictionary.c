@@ -1,5 +1,5 @@
 // Implements a dictionary's functionality
-
+// You don't need to edit anything in this file
 #include <ctype.h>
 #include <stdbool.h>
 
@@ -16,7 +16,12 @@ typedef struct node
     struct node *next;
 } node;
 
-// TODO: Choose number of buckets in hash table (wonder how we'd determine this?)
+// TODO: Choose number of buckets in hash table
+// 26 letters in the alphabet, so we want 26 indices to choose
+// from in the hash table
+// However, they note that you may want to increase this value
+// depending on your own implementation. I suppose that depends on
+// how many dictionary entries we're working with
 const unsigned int N = 26;
 
 // Hash table

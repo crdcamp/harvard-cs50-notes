@@ -7,7 +7,7 @@
 
 #include "dictionary.h"
 
-// Undefine any definitions. Why do we do this?
+// Undefine definitions. Why do we do this?
 #undef calculate
 #undef getrusage
 
