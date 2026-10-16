@@ -47,29 +47,22 @@ unsigned int hash(const char *word)
 // THIS IS A VERY VERY SLOW WAY TO DO THIS, BUT IT'S A START!
 // Think... there's gotta be a way to do this without looping through
 // the entire dictionary twice......
+// `mmap` might be your answer here. For now, try it your own way
 bool load(const char *dictionary)
 {
-    // Create a file pointer
-    FILE *file_pointer = fopen(dictionary, "r");
-    if (file_pointer == NULL) {
+    // Open the dictionary file
+    FILE *dictionary_file = fopen(dictionary, "r");
+    if (dictionary_file == NULL) {
         printf("Error opening file\n");
         return false;
     }
 
-    char ch;
-    size_t size = 1; // Add 1 to account for null string terminator
+    // Read each word in the file
 
-    // Calculate size of dictionary needed for memory
-    while((ch = fgetc(file_pointer)) != EOF) {
-        size++;
-    }
+    // Add each word to the hash table
 
-    // Allocate memory for the dictionary
-    dictionary = malloc((size));
-    if (dictionary == NULL) {
-        printf("Error allocating memory for %s\n", dictionary);
-        return false;
-    }
+    // Close the dictionary file
+    fclose(dictionary_file);
 
     return false;
 }
