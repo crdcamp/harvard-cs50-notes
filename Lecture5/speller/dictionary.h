@@ -9,6 +9,13 @@
 // This could be either some form of safer programming or some way to ensure
 // that changes that happen during runtime don't carry over to here... or
 // something else entirely. This will probably become clearer later
+
+// Explanation from the lecture:
+// These lines ensure that, even though `dictionary.c` and `speller.c` `#include`
+// this file, `clang` will only compile it once. This makes the above explanations
+// make a lot more sense as well. It's essentially to help performance. It prevents
+// double declarations of macros when a header file is included in multiple files
+// across a single project
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
 
@@ -20,6 +27,8 @@
 
 // Prototypes
 // All these functions are found in `dictionary.c`
+// These prototypes were left here so that they can
+// be accessed fro0m `speller.c` and `dictionary.c`
 bool check(const char *word);
 unsigned int hash(const char *word);
 bool load(const char *dictionary);
