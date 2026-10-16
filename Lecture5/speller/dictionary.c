@@ -1,6 +1,5 @@
 // Implements a dictionary's functionality
 // You don't need to edit anything in this file
-#include <cstdio>
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -72,6 +71,9 @@ bool load(const char *dictionary)
 
         // Add the word to the hash table
         hash(word);
+
+        // NOW I'm pretty sure I need to manage the linked list
+        // stuff for the hash table here
     }
 
     // Close the dictionary file
