@@ -70,7 +70,7 @@ bool load(const char *dictionary)
         }
 
         // Add the word to the hash table
-        hash(word);
+        unsigned int hash_index = hash(word);
 
         // NOW I'm pretty sure I need to manage the linked list
         // stuff for the hash table here
