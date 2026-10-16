@@ -8,6 +8,9 @@
 #include "dictionary.h"
 
 // Undefine definitions. Why do we do this?
+// Pretty sure it's because there are other macros in the standard
+// C library that use these same names. But why not just use a
+// different name?
 #undef calculate
 #undef getrusage
 
