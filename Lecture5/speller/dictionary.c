@@ -1,5 +1,6 @@
 // Implements a dictionary's functionality
 // You don't need to edit anything in this file
+#include <cstdio>
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -47,7 +48,9 @@ unsigned int hash(const char *word)
 // THIS IS A VERY VERY SLOW WAY TO DO THIS, BUT IT'S A START!
 // Think... there's gotta be a way to do this without looping through
 // the entire dictionary twice......
-// `mmap` might be your answer here. For now, try it your own way
+
+// `mmap` might be your answer here for a BLAZINGLY FAST load time
+// For now, try to just get it working
 bool load(const char *dictionary)
 {
     // Open the dictionary file
@@ -57,10 +60,13 @@ bool load(const char *dictionary)
         return false;
     }
 
-    // Read each word in the file
-
-
-    // Add each word to the hash table
+    // Read each word in the file and add each word to the hash table
+    char ch;
+    char word;
+    char word_buffer[LENGTH];
+    while ((ch = fgetc(dictionary_file)) != EOF) {
+        hash(fgets(word_buffer, sizeof(word_buffer), dictionary_file));
+    }
 
     // Close the dictionary file
     fclose(dictionary_file);
