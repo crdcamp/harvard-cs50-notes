@@ -116,23 +116,8 @@ bool load(const char *dictionary) {
 // Shouldn't this just be part of `load` if we don't want to iterate through
 // the entire hash table again? that would be BLAZINGLY FAST wouldn't it?
 unsigned int size(void) {
-    // Check if the dictionary is loaded into memory
-    // I can only think to do it this way since they don't want you
-    // to edit `speller.c`
-    // THIS COULD BE PUT INTO THE MAIN LOOP OF THIS FUNCTION
-    size_t table_size = sizeof(table) / sizeof(table[0]);
-    unsigned int null_count = 0;
-    for (int i = 0; i < table_size; i++) {
-        if (table[i] == NULL) {
-            null_count++;
-        }
-    }
-    if (table_size == null_count) {
-        printf("Dictionary is empty or not loaded\n");
-        return 0;
-    }
-
     // Traverse the `table` array and the linked lists in each index of the `table` array
+    size_t table_size = sizeof(table) / sizeof(table[0]);
     unsigned int word_count = 0;
     for (int i = 0; i < table_size; i++) {
         node *current_node = table[i];
