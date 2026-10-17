@@ -64,13 +64,16 @@ bool load(const char *dictionary)
     }
 
     char ch; // For determining the end of the file
-    char word; // For grabbing the actual word
-    // But maybe `ch` could be replaced with just `word`?...
+    char *word; // For grabbing the actual word
     char word_buffer[LENGTH];
     size_t word_buffer_size = sizeof(word_buffer);
+
+    // Loop through each character until you reach the end of the file
+    // (But what if we can only use `fgets` instead? `ch` might be unnecessary here)
+    // However, this might not be possible since `fgets` can only return NULL and not EOF
     while ((ch = fgetc(dictionary_file)) != EOF) {
         // Read each word in the file
-        char *word = fgets(word_buffer, word_buffer_size, dictionary_file); // `fgets` reads an entire line, including whitespace, until a newline, EOF, or size limit is reached
+        word = fgets(word_buffer, word_buffer_size, dictionary_file); // `fgets` reads an entire line, including whitespace, until a newline, EOF, or size limit is reached
         if (word == NULL) {
             printf("Error using `fgets` when loading dictionary `%s`\n", dictionary);
             return false;
@@ -79,8 +82,9 @@ bool load(const char *dictionary)
         // Add the word to the hash table
         unsigned int hash_index = hash(word);
 
-        // Each index is the start of a linked list
-        // So, that means you need to
+        // Enter the word into the `node` struct
+
+        // Put the struct in the corresponding `hash` index
     }
 
     // Close the dictionary file
