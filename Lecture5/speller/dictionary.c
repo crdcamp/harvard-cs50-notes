@@ -81,12 +81,12 @@ bool load(const char *dictionary)
             return false;
         }
 
+        // Convert the word to a hash index
+        unsigned int hash_index = hash(word);
+
         // Initialize `hash_node`'s fields
         strcpy(hash_node->word, word);
         hash_node->next = NULL;
-
-        // Convert the word to a hash index
-        unsigned int hash_index = hash(word);
 
         // Check if the hash index is empty
         // If it is, insert `hash_node`
