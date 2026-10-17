@@ -71,24 +71,27 @@ bool load(const char *dictionary)
     size_t word_buffer_size = sizeof(word_buffer);
     size_t hash_node_size = sizeof(node);
     while ((word = fgets(word_buffer, word_buffer_size, dictionary_file)) != NULL) {
-        // Strip `\n` from the word
-        word[strlen(word)-1] = 0; // 0 is the NULL terminator
+        // Strip `\n` from the end of `word`
+        word[strlen(word)-1] = 0; // 0 is the NULL terminator in ASCII
 
-        // Convert `word` to a hash index
-        unsigned int hash_index = hash(word);
-
-        // Allocate memory for `node` struct
+        // Allocate memory for `hash_node` struct
         node *hash_node = malloc(hash_node_size);
         if (hash_node == NULL) {
             printf("Error allocating memory for `hash_node`\n");
             return false;
         }
 
-        // Enter the word into the `node` struct
-        strcpy(hash_node->word, word_buffer);
+        // Convert the word to a hash index
+        unsigned int hash_index = hash(word);
 
-        // Add the word to the hash table
+        // Check if the hash index is empty
+        if (table[hash_index] == NULL) {
+            table[hash_index] = hash_node;
+        }
+        // Otherwise, iterate through the linked list until you've reached `hash_node->next == NULL`
+        else while (table[hash_index] != NULL {
 
+        }
 
         // Put the struct in the corresponding `hash` index
     }
