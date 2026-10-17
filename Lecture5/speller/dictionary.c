@@ -66,6 +66,7 @@ bool load(const char *dictionary)
         return false;
     }
 
+    // Iterate through the dictionary and load it into memory (the hash table)
     char *word;
     char word_buffer[LENGTH + 1];
     size_t word_buffer_size = sizeof(word_buffer);
@@ -74,7 +75,7 @@ bool load(const char *dictionary)
         // Strip `\n` from the end of `word`
         word[strlen(word)-1] = 0; // 0 is the NULL terminator in ASCII
 
-        // Allocate memory for `hash_node` struct
+        // Allocate memory for the `hash_node` struct
         node *hash_node = malloc(hash_node_size);
         if (hash_node == NULL) {
             printf("Error allocating memory for `hash_node`\n");
@@ -88,23 +89,25 @@ bool load(const char *dictionary)
         strcpy(hash_node->word, word);
         hash_node->next = NULL;
 
-        // Check if the hash index is empty
-        // If it is, insert `hash_node`
-        if (table[hash_index] == NULL) {
+        // Check if the hash index is empty. If it is, insert `hash_node`
+        // Always remember that you need to make a COPY of the linked list and
+        // traverse the COPY. Otherwise, you're just editing and breaking the original
+        node *current_node = table[hash_index];
+        if (current_node == NULL) {
             table[hash_index] = hash_node;
         }
-        // Otherwise, iterate through the linked list until you've reached `hash_node->next == NULL`
-        else while (table[hash_index]->next != NULL) {
-
+        // Otherwise, iterate through a copy of the linked list until you reach `next = NULL`
+        else
+            while (current_node->next != NULL) {
+                current_node = current_node->next;
+            }
+        current_node->next = hash_node;
         }
+        // Once you've found the last entry in the linked list, assign the new node to `next`
 
-        // Put the struct in the corresponding `hash` index
-    }
-
-    // Close the dictionary file
+    // Close the dictionary file and return `true`
     fclose(dictionary_file);
-
-    return false;
+    return true;
 }
 
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
