@@ -57,6 +57,7 @@ unsigned int hash(const char *word) {
 // For now, try to just get it working
 bool load(const char *dictionary) {
     // Open the dictionary file
+    printf("Loading '%s' into memory\n", dictionary);
     FILE *dictionary_file = fopen(dictionary, "r");
     if (dictionary_file == NULL) {
         printf("Error opening %s\n", dictionary);
@@ -90,6 +91,7 @@ bool load(const char *dictionary) {
         node *current_node = table[hash_index]; // You're copying the address here, not the actual data
         if (table[hash_index] == NULL) {
             table[hash_index] = hash_node;
+            printf("Loaded '%s' into memory\n", hash_node->word);
         }
         // Otherwise, iterate through a copy of the linked list until you reach `next == NULL`
         // Always remember that you need to make a COPY of the linked list and
@@ -99,17 +101,33 @@ bool load(const char *dictionary) {
                 current_node = current_node->next;
             }
         current_node->next = hash_node;
+        printf("Loaded word '%s' into memory\n", hash_node->word);
         }
         // Once you've found the last entry in the linked list, assign the new node to `next`
 
     // Close the dictionary file and return `true`
     fclose(dictionary_file);
+    printf("'%s' successfully loaded into memory\n", dictionary);
     return true;
 }
 
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
+// Shouldn't this just be part of `load` if we don't want to iterate through
+// the entire hash table again? that would be BLAZINGLY FAST wouldn't it?
 unsigned int size(void) {
-    // TODO
+    // Check if the dictionary is loaded into memory
+    size_t table_size = sizeof(table) / sizeof(table[0]);
+    unsigned int null_count = 0;
+    for (int i = 0; i < table_size;i++) {
+        if (table[i] == NULL) {
+            null_count++;
+        }
+    }
+    if (table_size == null_count) {
+        printf("Dictionary is empty or not loaded\n");
+        return 0;
+    }
+
     // This is probably gonna be a traversal of the array (outer loop),
     // followed by a traversal of the linked list (inner loop)
     unsigned int word_count = 0;
