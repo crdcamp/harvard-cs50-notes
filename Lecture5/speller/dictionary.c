@@ -66,12 +66,20 @@ bool load(const char *dictionary) {
 
     // Iterate through the dictionary and load it into memory (the hash table)
     char *word;
-    char word_buffer[LENGTH + 1];
+    char word_buffer[LENGTH + 2];
     size_t word_buffer_size = sizeof(word_buffer);
     size_t hash_node_size = sizeof(node);
     while ((word = fgets(word_buffer, word_buffer_size, dictionary_file)) != NULL) {
-        // Strip `\n` from the end of `word`
-        word[strlen(word)-1] = 0; // 0 is the NULL terminator in ASCII
+        // Strip `\n` from the end of `word` if found
+        char last_char = word[strlen(word)-1];
+        if (last_char == '\n') {
+            word[strlen(word)-1] = 0;
+        }
+        // If there's no newline, send a warning
+        else {
+            printf("Warning: Newline character not found for word '%s'\n", word);
+            continue;
+        }
 
         // Allocate memory for the `hash_node` struct
         node *hash_node = malloc(hash_node_size);
