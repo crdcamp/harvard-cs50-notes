@@ -85,11 +85,12 @@ bool load(const char *dictionary)
         unsigned int hash_index = hash(word);
 
         // Check if the hash index is empty
+        // If it is, insert `hash_node`
         if (table[hash_index] == NULL) {
             table[hash_index] = hash_node;
         }
         // Otherwise, iterate through the linked list until you've reached `hash_node->next == NULL`
-        else while (table[hash_index] != NULL {
+        else while (table[hash_index]->next != NULL) {
 
         }
 
