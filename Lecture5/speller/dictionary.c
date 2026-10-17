@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "dictionary.h"
 
@@ -14,6 +15,8 @@
 // Represents a node in a hash table
 typedef struct node
 {
+    // Could probably edit this later to dynamically allocate the
+    // size of the word rather than having a hard set value (double check the assignment rules for this)
     char word[LENGTH + 1]; // Always remember `+ 1` is for the NULL character `\0`
     struct node *next;
 } node;
@@ -63,18 +66,28 @@ bool load(const char *dictionary)
         return false;
     }
 
-    char *word; // For grabbing the actual word
-    char word_buffer[LENGTH]; // For calculating the word buffer size (fgets automatically applies `\0`)
-    size_t word_buffer_size = sizeof(word_buffer); // Avoid calculating the word buffer size every iteration. We wouldn't want that would we ya silly goose
-
+    char *word;
+    char word_buffer[LENGTH + 1];
+    size_t word_buffer_size = sizeof(word_buffer);
+    size_t hash_node_size = sizeof(node);
     while ((word = fgets(word_buffer, word_buffer_size, dictionary_file)) != NULL) {
+        // Strip `\n` from the word
+        word[strlen(word)-1] = 0; // 0 is the NULL terminator
+
         // Convert `word` to a hash index
         unsigned int hash_index = hash(word);
 
-        // Add the word to the hash table
-
+        // Allocate memory for `node` struct
+        node *hash_node = malloc(hash_node_size);
+        if (hash_node == NULL) {
+            printf("Error allocating memory for `hash_node`\n");
+            return false;
+        }
 
         // Enter the word into the `node` struct
+        strcpy(hash_node->word, word_buffer);
+
+        // Add the word to the hash table
 
 
         // Put the struct in the corresponding `hash` index
