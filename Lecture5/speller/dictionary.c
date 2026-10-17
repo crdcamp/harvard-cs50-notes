@@ -63,10 +63,10 @@ bool load(const char *dictionary)
         return false;
     }
 
-    char ch; // For determining the end of the file
+    int ch; // For determining the end of the file
     char *word; // For grabbing the actual word
-    char word_buffer[LENGTH];
-    size_t word_buffer_size = sizeof(word_buffer);
+    char word_buffer[LENGTH]; // For calculating the word buffer size
+    size_t word_buffer_size = sizeof(word_buffer); // Avoid calculating the word buffer size every iteration. We wouldn't want that would we ya silly goose
 
     // Loop through each character until you reach the end of the file
     // (But what if we can only use `fgets` instead? `ch` might be unnecessary here)
