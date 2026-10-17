@@ -24,6 +24,10 @@ typedef struct node
 // However, they note that you may want to increase this value
 // depending on your own implementation. I suppose that depends on
 // how many dictionary entries we're working with
+
+// Also, if it's not too great of a challenge, maybe look into a
+// tree structure to replace the linked lists in the hash table
+// ... could be a lot faster if done correctly
 const unsigned int N = 26;
 
 // Hash table
@@ -59,21 +63,24 @@ bool load(const char *dictionary)
         return false;
     }
 
-    char ch;
-    char word;
+    char ch; // For determining the end of the file
+    char word; // For grabbing the actual word
+    // But maybe `ch` could be replaced with just `word`?...
     char word_buffer[LENGTH];
+    size_t word_buffer_size;
     while ((ch = fgetc(dictionary_file)) != EOF) {
         // Read each word in the file
-        char *word = fgets(word_buffer, sizeof(word_buffer), dictionary_file); // `fgets` reads an entire line, including whitespace, until a newline, EOF, or size limit is reached
+        char *word = fgets(word_buffer, word_buffer_size, dictionary_file); // `fgets` reads an entire line, including whitespace, until a newline, EOF, or size limit is reached
         if (word == NULL) {
             printf("Error using `fgets` when loading dictionary `%s`\n", dictionary);
+            return false;
         }
 
         // Add the word to the hash table
         unsigned int hash_index = hash(word);
 
-        // NOW I'm pretty sure I need to manage the linked list
-        // stuff for the hash table here
+        // Each index is the start of a linked list
+        // So, that means you need to
     }
 
     // Close the dictionary file
