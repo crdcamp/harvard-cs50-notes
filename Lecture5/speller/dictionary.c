@@ -96,13 +96,14 @@ bool load(const char *dictionary) {
         // Otherwise, iterate through a copy of the linked list until you reach `next == NULL`
         // Always remember that you need to make a COPY of the linked list and
         // traverse the COPY. Otherwise, you're just editing and breaking the original
-        else
+        else {
             while (current_node->next != NULL) {
                 current_node = current_node->next;
             }
-        current_node->next = hash_node;
+            current_node->next = hash_node;
         printf("Loaded word '%s' into memory\n", hash_node->word);
         }
+    }
         // Once you've found the last entry in the linked list, assign the new node to `next`
 
     // Close the dictionary file and return `true`
