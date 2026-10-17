@@ -36,12 +36,6 @@ const unsigned int N = 26;
 // Hash table
 node *table[N];
 
-// Returns true if word is in dictionary, else false
-bool check(const char *word) {
-    // TODO
-    return false;
-}
-
 // Hashes word to a number
 unsigned int hash(const char *word) {
     // TODO: Improve this hash function
@@ -125,9 +119,8 @@ bool load(const char *dictionary) {
 // the entire hash table again? that would be BLAZINGLY FAST wouldn't it?
 unsigned int size(void) {
     // Traverse the `table` array and the linked lists in each index of the `table` array
-    size_t table_size = sizeof(table) / sizeof(table[0]);
     unsigned int word_count = 0;
-    for (int i = 0; i < table_size; i++) {
+    for (int i = 0; i < N; i++) {
         node *current_node = table[i];
         if (table[i] == NULL) {
             continue;
@@ -140,6 +133,28 @@ unsigned int size(void) {
 
     printf("Dictionary word count: %i\n", word_count);
     return word_count;
+}
+
+// This will need to be edited when you start adjusting the
+// hash table a bit more
+// Returns true if word is in dictionary, else false
+bool check(const char *word) {
+    char first_letter = word[0];
+    for (int i = 0; i < N; i++) {
+        // Find the index that matches the first letter of the word
+        if (table[i]->word[0] == first_letter) {
+            // Search until you find the matching word
+            node *current_node = table[i];
+            if (current_node->word != word) {
+                current_node = current_node->next;
+            }
+            // When found, spell check the word
+            else if (current_node->word == word) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 // Unloads dictionary from memory, returning true if successful, else false
