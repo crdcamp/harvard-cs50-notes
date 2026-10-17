@@ -139,10 +139,9 @@ unsigned int size(void) {
 // hash table a bit more
 // Returns true if word is in dictionary, else false
 bool check(const char *word) {
-    char first_letter = word[0];
     for (int i = 0; i < N; i++) {
         // Find the index that matches the first letter of the word
-        if (table[i]->word[0] == first_letter) {
+        if (table[i]->word[0] == word[0]) {
             // Search until you find the matching word
             node *current_node = table[i];
             if (current_node->word != word) {
@@ -154,6 +153,7 @@ bool check(const char *word) {
             }
         }
     }
+    // If the word isn't found, return false
     return false;
 }
 
