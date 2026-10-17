@@ -37,15 +37,13 @@ const unsigned int N = 26;
 node *table[N];
 
 // Returns true if word is in dictionary, else false
-bool check(const char *word)
-{
+bool check(const char *word) {
     // TODO
     return false;
 }
 
 // Hashes word to a number
-unsigned int hash(const char *word)
-{
+unsigned int hash(const char *word) {
     // TODO: Improve this hash function
     return toupper(word[0]) - 'A';
 }
@@ -57,8 +55,7 @@ unsigned int hash(const char *word)
 
 // `mmap` might be your answer here for a BLAZINGLY FAST load time
 // For now, try to just get it working
-bool load(const char *dictionary)
-{
+bool load(const char *dictionary) {
     // Open the dictionary file
     FILE *dictionary_file = fopen(dictionary, "r");
     if (dictionary_file == NULL) {
@@ -90,13 +87,13 @@ bool load(const char *dictionary)
         hash_node->next = NULL;
 
         // Check if the hash index is empty. If it is, insert `hash_node`
-        // Always remember that you need to make a COPY of the linked list and
-        // traverse the COPY. Otherwise, you're just editing and breaking the original
-        node *current_node = table[hash_index];
-        if (current_node == NULL) {
+        node *current_node = table[hash_index]; // You're copying the address here, not the actual data
+        if (table[hash_index] == NULL) {
             table[hash_index] = hash_node;
         }
-        // Otherwise, iterate through a copy of the linked list until you reach `next = NULL`
+        // Otherwise, iterate through a copy of the linked list until you reach `next == NULL`
+        // Always remember that you need to make a COPY of the linked list and
+        // traverse the COPY. Otherwise, you're just editing and breaking the original
         else
             while (current_node->next != NULL) {
                 current_node = current_node->next;
@@ -111,15 +108,16 @@ bool load(const char *dictionary)
 }
 
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
-unsigned int size(void)
-{
+unsigned int size(void) {
     // TODO
+    // This is probably gonna be a traversal of the array (outer loop),
+    // followed by a traversal of the linked list (inner loop)
+    unsigned int word_count = 0;
     return 0;
 }
 
 // Unloads dictionary from memory, returning true if successful, else false
-bool unload(void)
-{
+bool unload(void) {
     // TODO
     return false;
 }
