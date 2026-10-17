@@ -67,7 +67,7 @@ bool load(const char *dictionary)
     char word; // For grabbing the actual word
     // But maybe `ch` could be replaced with just `word`?...
     char word_buffer[LENGTH];
-    size_t word_buffer_size;
+    size_t word_buffer_size = sizeof(word_buffer);
     while ((ch = fgetc(dictionary_file)) != EOF) {
         // Read each word in the file
         char *word = fgets(word_buffer, word_buffer_size, dictionary_file); // `fgets` reads an entire line, including whitespace, until a newline, EOF, or size limit is reached
