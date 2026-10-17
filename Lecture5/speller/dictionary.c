@@ -101,7 +101,7 @@ bool load(const char *dictionary) {
                 current_node = current_node->next;
             }
             current_node->next = hash_node;
-        printf("Loaded word '%s' into memory\n", hash_node->word);
+        printf("Loaded '%s' into memory\n", hash_node->word);
         }
     }
         // Once you've found the last entry in the linked list, assign the new node to `next`
@@ -117,9 +117,12 @@ bool load(const char *dictionary) {
 // the entire hash table again? that would be BLAZINGLY FAST wouldn't it?
 unsigned int size(void) {
     // Check if the dictionary is loaded into memory
+    // I can only think to do it this way since they don't want you
+    // to edit `speller.c`
+    // THIS COULD BE PUT INTO THE MAIN LOOP OF THIS FUNCTION
     size_t table_size = sizeof(table) / sizeof(table[0]);
     unsigned int null_count = 0;
-    for (int i = 0; i < table_size;i++) {
+    for (int i = 0; i < table_size; i++) {
         if (table[i] == NULL) {
             null_count++;
         }
@@ -129,10 +132,21 @@ unsigned int size(void) {
         return 0;
     }
 
-    // This is probably gonna be a traversal of the array (outer loop),
-    // followed by a traversal of the linked list (inner loop)
+    // Traverse the `table` array and the linked lists in each index of the `table` array
     unsigned int word_count = 0;
-    return 0;
+    for (int i = 0; i < table_size; i++) {
+        node *current_node = table[i];
+        if (table[i] == NULL) {
+            continue;
+        }
+        while (current_node != NULL) {
+            word_count++;
+            current_node = current_node->next;
+        }
+    }
+
+    printf("Dictionary word count: %i\n", word_count);
+    return word_count;
 }
 
 // Unloads dictionary from memory, returning true if successful, else false
