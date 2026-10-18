@@ -81,7 +81,6 @@ int main(int argc, char *argv[])
     while (fread(&c, sizeof(char), 1, file))
     {
         // Allow only alphabetical characters and apostrophes
-        // What's the backslash `\` for?
         if (isalpha(c) || (c == '\'' && index > 0))
         {
             // Append character to word

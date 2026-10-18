@@ -55,7 +55,7 @@ unsigned int hash(const char *word) {
 // For now, try to just get it working
 bool load(const char *dictionary) {
     // Open the dictionary file
-    printf("Loading '%s' into memory\n", dictionary);
+    printf("Loading '%s' into memory...\n", dictionary);
     FILE *dictionary_file = fopen(dictionary, "r");
     if (dictionary_file == NULL) {
         printf("Error opening %s\n", dictionary);
@@ -97,7 +97,6 @@ bool load(const char *dictionary) {
         node *current_node = table[hash_index]; // You're copying the address here, not the actual data
         if (table[hash_index] == NULL) {
             table[hash_index] = hash_node;
-            printf("Loaded '%s' into memory\n", hash_node->word);
         }
         // Otherwise, iterate through a copy of the linked list until you reach `next == NULL`
         // Always remember that you need to make a COPY of the linked list and
@@ -108,14 +107,13 @@ bool load(const char *dictionary) {
                 current_node = current_node->next;
             }
             current_node->next = hash_node;
-        printf("Loaded '%s' into memory\n", hash_node->word);
         }
     }
         // Once you've found the last entry in the linked list, assign the new node to `next`
 
     // Close the dictionary file and return `true`
+    printf("Successfully loaded '%s' into memory\n", dictionary);
     fclose(dictionary_file);
-    printf("'%s' successfully loaded into memory\n", dictionary);
     return true;
 }
 
@@ -147,7 +145,7 @@ unsigned int size(void) {
 bool check(const char *word) {
     // Convert to lowercase to ensure accuracy
     // (Also could be replaced with `strcasecmp`, but that was never introduced in the course)
-    char word_lower[LENGTH + 1];
+    char word_lower[strlen(word) + 1];
     int i = 0;
     while (word[i] != '\0') {
         word_lower[i] = tolower(word[i]);
