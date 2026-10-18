@@ -66,6 +66,7 @@ bool load(const char *dictionary) {
     char word_buffer[LENGTH + 2]; // `+ 2` instead of `+ 1` to account for `\n` char
     size_t word_buffer_size = sizeof(word_buffer);
     size_t hash_node_size = sizeof(node);
+    // Get the word (`fgets` will stop at either `\n` or `EOF`)
     while ((word = fgets(word_buffer, word_buffer_size, dictionary_file)) != NULL) {
         // Strip `\n` from the end of `word` if found
         char last_char = word[strlen(word)-1];
@@ -90,25 +91,11 @@ bool load(const char *dictionary) {
         strcpy(hash_node->word, word);
         hash_node->next = NULL;
 
-        // Check if the hash index is empty. If it is, insert `hash_node`
-        node *current_node = table[hash_index]; // You're copying the address here, not the actual data
-        if (table[hash_index] == NULL) {
-            table[hash_index] = hash_node;
-        }
-        // Otherwise, iterate through a copy of the linked list until you reach `next == NULL`
-        // Always remember that you need to make a COPY of the linked list and
-        // traverse the COPY. Otherwise, you're just editing and breaking the original
-        // WE DON'T NEED TO WALK THE ENTIRE LINKED LIST HERE. JUST INSERT AT HEAD!
-        else {
-            while (current_node->next != NULL) {
-                current_node = current_node->next;
-            }
-            current_node->next = hash_node;
-        }
+        // Prepend the node and link it to the rest of the index's list
+        hash_node->next = table[hash_index];
+        table[hash_index] = hash_node;
     }
-        // Once you've found the last entry in the linked list, assign the new node to `next`
 
-    // Close the dictionary file and return `true`
     fclose(dictionary_file);
     return true;
 }
