@@ -171,17 +171,25 @@ bool check(const char *word) {
 
 // Unloads dictionary from memory, returning true if successful, else false
 bool unload(void) {
-    // While skipping NULL table values, iterate through each index in the table
+    // Iterate over the entire table
     for (int i = 0; i < N; i++) {
+        // If the table's node is not empty, free it
         node *current_node = table[i];
-        while (current_node != NULL) {
-            node *tmp_node = current_node; // Define a temporary node so you can redefine `current_node`
-            free(current_node->word);
-            free(current_node->next);
-            free(current_node);
-            current_node = tmp_node->next;
+        if (table[i] != NULL) {
+            while (current_node != NULL) {
+                node *tmp_node = current_node; // Define a temporary node so you can redefine `current_node`
+                free(current_node->word);
+                free(current_node->next);
+                free(current_node);
+                current_node = tmp_node->next; // Iterate to the next node in the linked list
+            }
+        }
+        // Otherwise move onto the next table entry
+        else {
+            continue;
         }
     }
 
-    return false;
+    // How do we handle the `false` case here?
+    return true;
 }
