@@ -74,8 +74,6 @@ bool load(const char *dictionary) {
             word[word_size - 1] = 0;
         }
         // If there's no newline, keep er goin
-        // There's potential here to corrupt the entire tree, but we're
-        // only dealing with clean data here so it doesn't really matter
         else {
             continue;
         }
