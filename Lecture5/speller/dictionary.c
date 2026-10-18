@@ -69,9 +69,9 @@ bool load(const char *dictionary) {
     size_t root_size = sizeof(node);
     while ((word = fgets(word_buffer, word_buffer_size, dictionary_file)) != NULL) {
         // Strip `\n` from the end of `word`
-        char last_char = word[strlen(word)-1];
-        if (last_char == '\n') {
-            word[strlen(word)-1] = 0;
+        int word_size = strlen(word);
+        if ((word_size - 1) == '\n') {
+            word[word_size - 1] = 0;
         }
         // If there's no newline, keep er goin
         // There's potential here to corrupt the entire tree, but we're
