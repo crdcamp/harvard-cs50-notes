@@ -17,6 +17,9 @@ typedef struct node
 {
     // Could probably edit this later to dynamically allocate the
     // size of the word rather than having a hard set value (double check the assignment rules for this)
+
+    // Don't forget to experiment with flexible array members for `word`, although
+    // you may run into some difficulties with implementing this
     char word[LENGTH + 1]; // Always remember `+ 1` is for the NULL character `\0`
     struct node *next;
 } node;
@@ -48,6 +51,7 @@ unsigned int hash(const char *word) {
 // the entire dictionary twice......
 
 // `mmap` might be your answer here for a BLAZINGLY FAST load time
+// As an easier requirement USE HEAD INSERTION INSTEAD OF TAIL INSERTION
 // For now, try to just get it working
 bool load(const char *dictionary) {
     // Open the dictionary file
@@ -98,6 +102,7 @@ bool load(const char *dictionary) {
         // Otherwise, iterate through a copy of the linked list until you reach `next == NULL`
         // Always remember that you need to make a COPY of the linked list and
         // traverse the COPY. Otherwise, you're just editing and breaking the original
+        // WE DON'T NEED TO WALK THE ENTIRE LINKED LIST HERE. JUST INSERT AT HEAD!
         else {
             while (current_node->next != NULL) {
                 current_node = current_node->next;
@@ -119,6 +124,7 @@ bool load(const char *dictionary) {
 // the entire hash table again? that would be BLAZINGLY FAST wouldn't it?
 unsigned int size(void) {
     // Traverse the `table` array and the linked lists in each index of the `table` array
+    // you could
     unsigned int word_count = 0;
     for (int i = 0; i < N; i++) {
         node *current_node = table[i];
@@ -139,20 +145,19 @@ unsigned int size(void) {
 // hash table a bit more
 // Returns true if word is in dictionary, else false
 bool check(const char *word) {
-    for (int i = 0; i < N; i++) {
-        // Find the index that matches the first letter of the word
-        if (table[i]->word[0] == word[0]) {
-            // Search until you find the matching word
-            node *current_node = table[i];
-            if (current_node->word != word) {
-                current_node = current_node->next;
-            }
-            // When found, spell check the word
-            else if (current_node->word == word) {
-                return true;
-            }
+    // Determine the table index by hashing the word
+    int index = hash(word);
+
+    // Access the values of that index
+    node *current_node = table[index];
+    while (current_node != NULL) {
+        // Compare `word` to the words in the linked list
+        if (strcmp(current_node->word, word) == 0) {
+            return true;
         }
+        else current_node = current_node->next;
     }
+
     // If the word isn't found, return false
     return false;
 }
