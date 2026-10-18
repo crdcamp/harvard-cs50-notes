@@ -173,20 +173,15 @@ bool check(const char *word) {
 bool unload(void) {
     // Iterate over the entire table
     for (int i = 0; i < N; i++) {
-        // If the table's node is not empty, free it
-        if (table[i] != NULL) {
-            node *current_node = table[i];
-            while (current_node->next != NULL) {
-                node *tmp_node = current_node; // Define a temporary node so you can redefine `current_node`
-                free(current_node->word);
-                free(current_node->next);
-                free(current_node);
-                current_node = tmp_node->next; // Iterate to the next node in the linked list
-            }
-        }
-        // Otherwise move onto the next table entry
-        else {
-            continue;
+        // If the current table index is not NULL, free all of its values
+        node *current_node = table[i];
+        while (current_node != NULL) {
+            // Define a temporary node to iterate to the next node
+            node *tmp = current_node;
+            free(current_node->next);
+            free(current_node);
+            // Iterate to the next node
+            current_node = tmp->next;
         }
     }
 
