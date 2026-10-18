@@ -69,9 +69,10 @@ bool load(const char *dictionary) {
     // Get the word (`fgets` will stop at either `\n` or `EOF`)
     while ((word = fgets(word_buffer, word_buffer_size, dictionary_file)) != NULL) {
         // Strip `\n` from the end of `word` if found
-        char last_char = word[strlen(word)-1];
+        int word_size = strlen(word);
+        char last_char = word[word_size-1];
         if (last_char == '\n') {
-            word[strlen(word)-1] = 0;
+            word[word_size] = 0;
         }
         // If there's no newline, send a warning
         else {
