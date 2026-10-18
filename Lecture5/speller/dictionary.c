@@ -72,7 +72,7 @@ bool load(const char *dictionary) {
         int word_size = strlen(word);
         char last_char = word[word_size-1];
         if (last_char == '\n') {
-            word[word_size] = 0;
+            word[word_size - 1] = 0;
         }
         // If there's no newline, send a warning
         else {
