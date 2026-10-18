@@ -24,7 +24,6 @@ unsigned int hash(const char *word) {
 node *new_node(char word[LENGTH + 1]) {
     node *new_node = malloc(sizeof(node));
     if (new_node == NULL) {
-        printf("Error allocating memory for `new_node`\n");
         return NULL;
     }
 
@@ -59,11 +58,12 @@ bool load(const char *dictionary) {
             continue;
         }
 
-        // Create a new tree node
-
-
-        // Populate the binary tree's fields
+        // Create a new node for the binary tree
         node *tree = new_node(word);
+        if (tree == NULL) {
+            printf("Error allocating memory for node `new_tree`\n");
+            return false;
+        }
 
         // Now, how do we determine how to designate where the word goes?
         // We want the full tree to be
