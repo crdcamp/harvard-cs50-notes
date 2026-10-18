@@ -1,6 +1,5 @@
 // Implements a dictionary's functionality
 // You don't need to edit anything in this file
-#include <cctype>
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
