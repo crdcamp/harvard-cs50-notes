@@ -1,5 +1,6 @@
 // Implements a dictionary's functionality
 // You don't need to edit anything in this file
+#include <cctype>
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -145,16 +146,26 @@ unsigned int size(void) {
 // hash table a bit more
 // Returns true if word is in dictionary, else false
 bool check(const char *word) {
+    // Convert to lowercase to ensure accuracy
+    // (Also could be replaced with `strcasecmp`, but that was never introduced in the course)
+    char word_lower[LENGTH + 1];
+    int i = 0;
+    while (word[i] != '\0') {
+        word_lower[i] = tolower(word[i]);
+        i++;
+    }
+
     // Determine the table index by hashing the word
-    int index = hash(word);
+    int index = hash(word_lower);
 
     // Access the values of that index
     node *current_node = table[index];
     while (current_node != NULL) {
         // Compare `word` to the words in the linked list
-        if (strcmp(current_node->word, word) == 0) {
+        if (strcmp(current_node->word, word_lower) == 0) {
             return true;
         }
+        // If no match, move on to the next node
         else current_node = current_node->next;
     }
 
