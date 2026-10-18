@@ -173,11 +173,12 @@ bool check(const char *word) {
 bool unload(void) {
     // While skipping NULL table values, iterate through each index in the table
     for (int i = 0; i < N; i++) {
-        node *current_node = NULL;
+        node *current_node = table[i];
         while (current_node != NULL) {
             node *tmp_node = current_node; // Define a temporary node so you can redefine `current_node`
             free(current_node->word);
             free(current_node->next);
+            free(current_node);
             current_node = tmp_node->next;
         }
     }
