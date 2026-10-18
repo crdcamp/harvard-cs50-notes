@@ -174,9 +174,9 @@ bool unload(void) {
     // Iterate over the entire table
     for (int i = 0; i < N; i++) {
         // If the table's node is not empty, free it
-        node *current_node = table[i];
         if (table[i] != NULL) {
-            while (current_node != NULL) {
+            node *current_node = table[i];
+            while (current_node->next != NULL) {
                 node *tmp_node = current_node; // Define a temporary node so you can redefine `current_node`
                 free(current_node->word);
                 free(current_node->next);
