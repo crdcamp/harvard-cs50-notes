@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 
 #include "dictionary.h"
 
@@ -55,10 +56,8 @@ unsigned int hash(const char *word) {
 // For now, try to just get it working
 bool load(const char *dictionary) {
     // Open the dictionary file
-    printf("Loading '%s' into memory...\n", dictionary);
     FILE *dictionary_file = fopen(dictionary, "r");
     if (dictionary_file == NULL) {
-        printf("Error opening %s\n", dictionary);
         return false;
     }
 
@@ -75,14 +74,12 @@ bool load(const char *dictionary) {
         }
         // If there's no newline, send a warning
         else {
-            printf("Warning: Newline character not found for word '%s'\n", word);
             continue;
         }
 
         // Allocate memory for the `hash_node` struct
         node *hash_node = malloc(hash_node_size);
         if (hash_node == NULL) {
-            printf("Error allocating memory for `hash_node`\n");
             return false;
         }
 
@@ -112,7 +109,6 @@ bool load(const char *dictionary) {
         // Once you've found the last entry in the linked list, assign the new node to `next`
 
     // Close the dictionary file and return `true`
-    printf("Successfully loaded '%s' into memory\n", dictionary);
     fclose(dictionary_file);
     return true;
 }
@@ -135,7 +131,6 @@ unsigned int size(void) {
         }
     }
 
-    printf("Dictionary word count: %i\n", word_count);
     return word_count;
 }
 
@@ -143,22 +138,14 @@ unsigned int size(void) {
 // hash table a bit more
 // Returns true if word is in dictionary, else false
 bool check(const char *word) {
-    // Convert to lowercase to ensure accuracy
-    char word_lower[strlen(word) + 1]; // `strlen` doesn't include `\0`
-    int i = 0;
-    while (word[i] != '\0') {
-        word_lower[i] = tolower(word[i]);
-        i++;
-    }
-
     // Determine the table index by hashing the word
-    int index = hash(word_lower);
+    int index = hash(word);
 
     // Access the values of that index
     node *current_node = table[index];
     while (current_node != NULL) {
         // Compare `word` to the words in the linked list
-        if (strcmp(current_node->word, word_lower) == 0) {
+        if (strcasecmp(current_node->word, word) == 0) {
             return true;
         }
         // If no match, move on to the next node
@@ -176,13 +163,11 @@ bool unload(void) {
         // If the current table index is not NULL, free all of its values
         node *current_node = table[i];
         while (current_node != NULL) {
-            // Define a temporary node to iterate to the next node
-            node *tmp = current_node;
-            free(current_node->next);
+            node *next_node = current_node->next;
             free(current_node);
-            // Iterate to the next node
-            current_node = tmp->next;
+            current_node = next_node;
         }
+        table[i] = NULL;
     }
 
     // How do we handle the `false` case here?
