@@ -22,7 +22,8 @@ typedef struct node
     // Don't forget to experiment with flexible array members for `word`, although
     // you may run into some difficulties with implementing this
     char word[LENGTH + 1]; // Always remember `+ 1` is for the NULL character `\0`
-    struct node *next;
+    struct node *left;
+    struct node *right;
 } node;
 
 // TODO: Choose number of buckets in hash table
@@ -65,46 +66,27 @@ bool load(const char *dictionary) {
     char *word;
     char word_buffer[LENGTH + 2]; // `+ 2` instead of `+ 1` to account for `\n` char
     size_t word_buffer_size = sizeof(word_buffer);
-    size_t hash_node_size = sizeof(node);
+    size_t root_size = sizeof(node);
     while ((word = fgets(word_buffer, word_buffer_size, dictionary_file)) != NULL) {
-        // Strip `\n` from the end of `word` if found
+        // Strip `\n` from the end of `word`
         char last_char = word[strlen(word)-1];
         if (last_char == '\n') {
             word[strlen(word)-1] = 0;
         }
-        // If there's no newline, send a warning
+        // If there's no newline, keep er goin
+        // There's potential here to corrupt the entire tree, but we're
+        // only dealing with clean data here so it doesn't really matter
         else {
             continue;
         }
 
-        // Allocate memory for the `hash_node` struct
-        node *hash_node = malloc(hash_node_size);
-        if (hash_node == NULL) {
+        // Allocate memory for the `root` struct
+        node *root = malloc(root_size);
+        if (root == NULL) {
             return false;
         }
 
-        // Convert the word to a hash index
-        unsigned int hash_index = hash(word);
 
-        // Initialize `hash_node`'s fields
-        strcpy(hash_node->word, word);
-        hash_node->next = NULL;
-
-        // Check if the hash index is empty. If it is, insert `hash_node`
-        node *current_node = table[hash_index]; // You're copying the address here, not the actual data
-        if (table[hash_index] == NULL) {
-            table[hash_index] = hash_node;
-        }
-        // Otherwise, iterate through a copy of the linked list until you reach `next == NULL`
-        // Always remember that you need to make a COPY of the linked list and
-        // traverse the COPY. Otherwise, you're just editing and breaking the original
-        // WE DON'T NEED TO WALK THE ENTIRE LINKED LIST HERE. JUST INSERT AT HEAD!
-        else {
-            while (current_node->next != NULL) {
-                current_node = current_node->next;
-            }
-            current_node->next = hash_node;
-        }
     }
         // Once you've found the last entry in the linked list, assign the new node to `next`
 
@@ -138,38 +120,12 @@ unsigned int size(void) {
 // hash table a bit more
 // Returns true if word is in dictionary, else false
 bool check(const char *word) {
-    // Determine the table index by hashing the word
-    int index = hash(word);
-
-    // Access the values of that index
-    node *current_node = table[index];
-    while (current_node != NULL) {
-        // Compare `word` to the words in the linked list
-        if (strcasecmp(current_node->word, word) == 0) {
-            return true;
-        }
-        // If no match, move on to the next node
-        else current_node = current_node->next;
-    }
-
-    // If the word isn't found, return false
+    printf("Function `check` not yet implemented\n");
     return false;
 }
 
 // Unloads dictionary from memory, returning true if successful, else false
 bool unload(void) {
-    // Iterate over the entire table
-    for (int i = 0; i < N; i++) {
-        // If the current table index is not NULL, free all of its values
-        node *current_node = table[i];
-        while (current_node != NULL) {
-            node *next_node = current_node->next;
-            free(current_node);
-            current_node = next_node;
-        }
-        table[i] = NULL;
-    }
-
-    // How do we handle the `false` case here?
-    return true;
+    printf("Function `unload` not yet implemented\n");
+    return false;
 }
