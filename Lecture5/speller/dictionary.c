@@ -64,7 +64,7 @@ bool load(const char *dictionary) {
 
     // Iterate through the dictionary and load it into memory (the hash table)
     char *word;
-    char word_buffer[LENGTH + 2];
+    char word_buffer[LENGTH + 2]; // `+ 2` instead of `+ 1` to account for `\n` char
     size_t word_buffer_size = sizeof(word_buffer);
     size_t hash_node_size = sizeof(node);
     while ((word = fgets(word_buffer, word_buffer_size, dictionary_file)) != NULL) {
@@ -144,8 +144,7 @@ unsigned int size(void) {
 // Returns true if word is in dictionary, else false
 bool check(const char *word) {
     // Convert to lowercase to ensure accuracy
-    // (Also could be replaced with `strcasecmp`, but that was never introduced in the course)
-    char word_lower[strlen(word) + 1];
+    char word_lower[strlen(word) + 1]; // `strlen` doesn't include `\0`
     int i = 0;
     while (word[i] != '\0') {
         word_lower[i] = tolower(word[i]);
@@ -172,6 +171,16 @@ bool check(const char *word) {
 
 // Unloads dictionary from memory, returning true if successful, else false
 bool unload(void) {
-    // TODO
+    // While skipping NULL table values, iterate through each index in the table
+    for (int i = 0; i < N; i++) {
+        node *current_node = NULL;
+        while (current_node != NULL) {
+            node *tmp_node = current_node; // Define a temporary node so you can redefine `current_node`
+            free(current_node->word);
+            free(current_node->next);
+            current_node = tmp_node->next;
+        }
+    }
+
     return false;
 }
