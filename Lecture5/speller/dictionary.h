@@ -26,14 +26,25 @@
 // (e.g., pneumonoultramicroscopicsilicovolcanoconiosis)
 #define LENGTH 45
 
+// Represents a node in a hash table
+typedef struct node
+{
+    // Don't forget to experiment with flexible array members for `word`, although
+    // you may run into some difficulties with implementing this
+    char word[LENGTH + 1];
+    struct node *left;
+    struct node *right;
+} node;
+
 // Prototypes
 // All these functions are found in `dictionary.c`
 // These prototypes were left here so that they can
 // be accessed fro0m `speller.c` and `dictionary.c`
-bool check(const char *word);
 unsigned int hash(const char *word);
+node *new_node(char word[LENGTH + 1]);
 bool load(const char *dictionary);
 unsigned int size(void);
+bool check(const char *word);
 bool unload(void);
 
 #endif // DICTIONARY_H
