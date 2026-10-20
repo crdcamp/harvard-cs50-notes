@@ -47,7 +47,9 @@ typedef struct node
 unsigned int hash(const char *word);
 node *new_node(char word[LENGTH + 1]);
 node *insert_node(node *root, char *word);
+void print_tree(node *root, int level);
 bool load(const char *dictionary);
+
 unsigned int size(void);
 bool check(const char *word);
 bool unload(void);

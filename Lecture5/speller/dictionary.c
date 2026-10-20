@@ -27,11 +27,29 @@ node *new_node(char word[LENGTH + 1]) {
         return NULL;
     }
 
+    // Assign the word
     strcpy(new_node->word, word);
+
+    // Assign the left and right nodes as NULL
     new_node->left = NULL;
     new_node->right = NULL;
 
+    // Initiate the left and right sizes
+    new_node->left_size = 0;
+    new_node->right_size = 0;
+
     return new_node;
+}
+
+void print_tree(node *root, int level)
+{
+        if (root == NULL)
+                return;
+        for (int i = 0; i < level; i++)
+                printf(i == level - 1 ? "|-" : "  ");
+        printf("%s\n", root->word);
+        print_tree(root->left, level + 1);
+        print_tree(root->right, level + 1);
 }
 
 node *insert_node(node *root, char *word) {
@@ -56,6 +74,8 @@ node *insert_node(node *root, char *word) {
         return insert_node(root->right, word);
     }
 
+    print_tree(root, 4);
+
     return root;
 }
 
@@ -72,26 +92,17 @@ bool load(const char *dictionary) {
     char word_buffer[LENGTH + 2]; // `+ 2` instead of `+ 1` to account for `\n` char
     size_t word_buffer_size = sizeof(word_buffer);
     size_t tree_size = sizeof(node);
+    node *root = NULL;
     while ((word = fgets(word_buffer, word_buffer_size, dictionary_file)) != NULL) {
         // Strip `\n` from the end of `word`
         int word_size = strlen(word);
-        if ((word_size - 1) == '\n') {
+        if ((word[word_size - 1]) == '\n') {
             word[word_size - 1] = 0;
         }
         // If there's no newline, keep er goin
         else {
             continue;
         }
-
-        // Define the fields of the node struct
-        node *root = NULL;
-        strcpy(root->word, word);
-
-        root->left = NULL;
-        root->right = NULL;
-
-        root->left_size = 0;
-        root->right_size = 0;
 
         // Insert the node into the binary tree while updating left and right
         // tree size
@@ -104,6 +115,9 @@ bool load(const char *dictionary) {
         // Insert the tree into the appropriate hash index
         int index = hash(root->word);
         table[index] = root;
+
+        printf("RESULTING TREE FOR INDEX %i\n", index);
+        print_tree(root, 4);
     }
 
     // If loop finished successfully, close the dictionary file and return `true`
@@ -115,7 +129,6 @@ bool load(const char *dictionary) {
 // Shouldn't this just be part of `load` if we don't want to iterate through
 // the entire hash table again? that would be BLAZINGLY FAST wouldn't it?
 unsigned int size(void) {
-    printf("Function `size` not yet implemented\n");
     return 0;
 }
 
@@ -123,12 +136,10 @@ unsigned int size(void) {
 // hash table a bit more
 // Returns true if word is in dictionary, else false
 bool check(const char *word) {
-    printf("Function `check` not yet implemented\n");
     return false;
 }
 
 // Unloads dictionary from memory, returning true if successful, else false
 bool unload(void) {
-    printf("Function `unload` not yet implemented\n");
     return false;
 }
