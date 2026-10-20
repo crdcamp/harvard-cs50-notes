@@ -88,16 +88,19 @@ bool load(const char *dictionary) {
         // There's gotta be a bettet way to keep track of the left and right
         // size. `insert_node` could instead return a struct containing that data,
         // but that might make it impossible to actually insert the node
-        insert_node(table[index], word, left_size, right_size);
+        node *tree = insert_node(table[index], word, left_size, right_size);
+        if (tree == NULL) {
+            printf("Error allocating memory for `tree`\n");
+            return false;
+        }
 
-        // You might have to reset the left and right sizes for further
-        // dictionary loads (a problem to diagnose later)
-        // Or, you can just set them both to 0 in `unload`
+        // Need to find a way to keep track of the counts for each
+        // individual node. Otherwise, none of this is gonna work correctly
+    }
 
-    // Close the dictionary file and return `true`
+    // If loop finished successfully, close the dictionary file and return `true`
     fclose(dictionary_file);
     return true;
-    }
 }
 
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
