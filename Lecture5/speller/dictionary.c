@@ -34,7 +34,7 @@ node *new_node(char word[LENGTH + 1]) {
     return new_node;
 }
 
-node *insert_node(node *tree, char *word, int left_size, int right_size) {
+node *insert_node(node *tree, char *word, int *left_size, int *right_size) {
     // If the tree is empty or you reach an empty node,
     if (tree == NULL) {
         new_node(word);
@@ -93,8 +93,8 @@ bool load(const char *dictionary) {
         // every time you add a word (this might be complicated by the binary structure though)
         // SO, let's try that
         int index = hash(word);
-        int left_size = 0;
-        int right_size = 0;
+        int *left_size = 0;
+        int *right_size = 0;
 
         // The first check need to determine if both counts are equal
         // If they are, let's just assign the word to the left
@@ -102,6 +102,10 @@ bool load(const char *dictionary) {
         // size. `insert_node` could instead return a struct containing that data,
         // but that might make it impossible to actually insert the node
         insert_node(tree_node, word, left_size, right_size);
+
+        // You might have to reset the left and right sizes for further
+        // dictionary loads (a problem to diagnose later)
+        // Or, you can just set them both to 0 in `unload`
 
     // Close the dictionary file and return `true`
     fclose(dictionary_file);
