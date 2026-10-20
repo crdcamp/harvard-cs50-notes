@@ -34,6 +34,22 @@ node *new_node(char word[LENGTH + 1]) {
     return new_node;
 }
 
+node *insert_node(node *tree, char *word, int left_size, int right_size) {
+    // If the tree is empty or you reach an empty node,
+    if (tree == NULL) {
+        new_node(word);
+    }
+
+    // If both sides of the tree are equal, send the word to the left
+    if (left_size == right_size) return insert_node(tree->left, word, left_size++, right_size);
+    // If the left side has less nodes than the right, send the word left
+    else if (left_size < right_size) return insert_node(tree->left, word, left_size++, right_size);
+    // If the right side has less nodes than the left, send the word right
+    else if (left_size > right_size) return insert_node(tree->right, word, left_size, right_size++);
+
+    return tree;
+}
+
 // Loads dictionary into memory, returning true if successful, else false
 bool load(const char *dictionary) {
     // Open the dictionary file
@@ -59,41 +75,46 @@ bool load(const char *dictionary) {
         }
 
         // Create a new node for the binary tree
-        node *tree = new_node(word);
-        if (tree == NULL) {
+        node *tree_node = new_node(word);
+        if (tree_node == NULL) {
             printf("Error allocating memory for node `new_tree`\n");
             return false;
         }
 
         // Now, how do we determine how to designate where the word goes?
-        // We want the full tree to be
-    }
-        // Once you've found the last entry in the linked list, assign the new node to `next`
+        // Ideally, we want to evenly distribute the tree, yet the simple version
+        // of this involves recounting the tree's left and right node count at each
+        // iteration. This is evidently very inefficient, as you'd be traversing the
+        // tree multiple times throughout the insertion
+
+        // Actually, if you iterate through the tree instead of using recursion,
+        // you might not have to worry about traversing the entire tree every time.
+        // You can instead just traverse it once, and add to the left/right count
+        // every time you add a word (this might be complicated by the binary structure though)
+        // SO, let's try that
+        int index = hash(word);
+        int left_size = 0;
+        int right_size = 0;
+
+        // The first check need to determine if both counts are equal
+        // If they are, let's just assign the word to the left
+        // There's gotta be a bettet way to keep track of the left and right
+        // size. `insert_node` could instead return a struct containing that data,
+        // but that might make it impossible to actually insert the node
+        insert_node(tree_node, word, left_size, right_size);
 
     // Close the dictionary file and return `true`
     fclose(dictionary_file);
     return true;
+    }
 }
 
 // Returns number of words in dictionary if loaded, else 0 if not yet loaded
 // Shouldn't this just be part of `load` if we don't want to iterate through
 // the entire hash table again? that would be BLAZINGLY FAST wouldn't it?
 unsigned int size(void) {
-    // Traverse the `table` array and the linked lists in each index of the `table` array
-    // you could
-    unsigned int word_count = 0;
-    for (int i = 0; i < N; i++) {
-        node *current_node = table[i];
-        if (table[i] == NULL) {
-            continue;
-        }
-        while (current_node != NULL) {
-            word_count++;
-            current_node = current_node->next;
-        }
-    }
-
-    return word_count;
+    printf("Function `size` not yet implemented\n");
+    return 0;
 }
 
 // This will need to be edited when you start adjusting the

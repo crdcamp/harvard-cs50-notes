@@ -42,6 +42,7 @@ typedef struct node
 // be accessed fro0m `speller.c` and `dictionary.c`
 unsigned int hash(const char *word);
 node *new_node(char word[LENGTH + 1]);
+node *insert_node(node *tree, char *word, int left_ize, int right_size);
 bool load(const char *dictionary);
 unsigned int size(void);
 bool check(const char *word);
