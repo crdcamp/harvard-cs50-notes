@@ -32,15 +32,13 @@ typedef struct node
     // Don't forget to experiment with flexible array members for `word`, although
     // you may run into some difficulties with implementing this
     char word[LENGTH + 1];
+
     struct node *left;
     struct node *right;
-} node;
 
-typedef struct index_metadata {
-    unsigned int index;
     int left_size;
     int right_size;
-} index_metadata;
+} node;
 
 // Prototypes
 // All these functions are found in `dictionary.c`
@@ -48,7 +46,7 @@ typedef struct index_metadata {
 // be accessed fro0m `speller.c` and `dictionary.c`
 unsigned int hash(const char *word);
 node *new_node(char word[LENGTH + 1]);
-node *insert_node(node *tree, char *word, int left_size, int right_size);
+node *insert_node(node *root, char *word);
 bool load(const char *dictionary);
 unsigned int size(void);
 bool check(const char *word);

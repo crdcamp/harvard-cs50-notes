@@ -34,20 +34,29 @@ node *new_node(char word[LENGTH + 1]) {
     return new_node;
 }
 
-node *insert_node(node *table_index, char *word, int left_size, int right_size) {
+node *insert_node(node *root, char *word) {
     // If the tree is empty or you reach an empty node,
-    if (table_index == NULL) {
+    if (root == NULL) {
         return new_node(word);
     }
 
     // If both sides of the tree are equal, send the word to the left
-    if (left_size == right_size) return insert_node(table_index->left, word, left_size++, right_size);
+    if (root->left_size == root->right_size) {
+        root->left_size++;
+        return insert_node(root->left, word);
+    }
     // Otherwise, if the left side has less nodes than the right, send the word left
-    else if (left_size < right_size) return insert_node(table_index->left, word, left_size++, right_size);
+    else if (root->left_size < root->right_size) {
+        root->left_size++;
+        return insert_node(root->left, word);
+    }
     // Otherwise, if the right side has less nodes than the left, send the word right
-    else if (left_size > right_size) return insert_node(table_index->right, word, left_size, right_size++);
+    else if (root->left_size > root->right_size) {
+        root->right_size++;
+        return insert_node(root->right, word);
+    }
 
-    return table_index;
+    return root;
 }
 
 // Loads dictionary into memory, returning true if successful, else false
@@ -74,23 +83,27 @@ bool load(const char *dictionary) {
             continue;
         }
 
-        // Define metadata for the index to carry left and right branch sizes across function calls
-        index_metadata *index_meta = NULL;
-        index_meta->index = hash(word);
-        index_meta->left_size = 0;
-        index_meta->right_size = 0;
+        // Define the fields of the node struct
+        node *root = NULL;
+        strcpy(root->word, word);
+
+        root->left = NULL;
+        root->right = NULL;
+
+        root->left_size = 0;
+        root->right_size = 0;
 
         // Insert the node into the binary tree while updating left and right
         // tree size
-        node *root = NULL;
-        root = insert_node(table[index_meta->index], word, index_meta->left_size, index_meta->right_size);
+        root = insert_node(root, word);
         if (root == NULL) {
             printf("Error allocating memory for `root`\n");
             return false;
         }
 
-        // Need to find a way to keep track of the counts for each
-        // individual node. Otherwise, none of this is gonna work correctly
+        // Insert the tree into the appropriate hash index
+        int index = hash(root->word);
+        table[index] = root;
     }
 
     // If loop finished successfully, close the dictionary file and return `true`
