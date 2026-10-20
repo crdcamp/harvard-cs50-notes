@@ -75,6 +75,11 @@ bool load(const char *dictionary) {
         }
 
         int index = hash(word);
+        // Define left and right binary tree count pointer to keep track
+        // of the left and right branch sizes across `insert_node` calls
+        // THERE'S A PROBLEM HERE THOUGH: The left and right size carry across
+        // each table index. The counts will accumulate over the entire hash
+        // table, not just individual indices
         static int *left_size = 0;
         static int *right_size = 0;
 
