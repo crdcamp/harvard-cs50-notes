@@ -34,7 +34,7 @@ node *new_node(char word[LENGTH + 1]) {
     return new_node;
 }
 
-node *insert_node(node *table_index, char *word, int *left_size, int *right_size) {
+node *insert_node(node *table_index, char *word, int left_size, int right_size) {
     // If the tree is empty or you reach an empty node,
     if (table_index == NULL) {
         return new_node(word);
@@ -74,23 +74,18 @@ bool load(const char *dictionary) {
             continue;
         }
 
-        int index = hash(word);
-        // Define left and right binary tree count pointer to keep track
-        // of the left and right branch sizes across `insert_node` calls
-        // THERE'S A PROBLEM HERE THOUGH: The left and right size carry across
-        // each table index. The counts will accumulate over the entire hash
-        // table, not just individual indices
-        static int *left_size = 0;
-        static int *right_size = 0;
+        // Define metadata for the index to carry left and right branch sizes across function calls
+        index_metadata *index_meta = NULL;
+        index_meta->index = hash(word);
+        index_meta->left_size = 0;
+        index_meta->right_size = 0;
 
-        // The first check need to determine if both counts are equal
-        // If they are, let's just assign the word to the left
-        // There's gotta be a bettet way to keep track of the left and right
-        // size. `insert_node` could instead return a struct containing that data,
-        // but that might make it impossible to actually insert the node
-        node *tree = insert_node(table[index], word, left_size, right_size);
-        if (tree == NULL) {
-            printf("Error allocating memory for `tree`\n");
+        // Insert the node into the binary tree while updating left and right
+        // tree size
+        node *root = NULL;
+        root = insert_node(table[index_meta->index], word, index_meta->left_size, index_meta->right_size);
+        if (root == NULL) {
+            printf("Error allocating memory for `root`\n");
             return false;
         }
 

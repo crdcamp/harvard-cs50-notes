@@ -36,13 +36,19 @@ typedef struct node
     struct node *right;
 } node;
 
+typedef struct index_metadata {
+    unsigned int index;
+    int left_size;
+    int right_size;
+} index_metadata;
+
 // Prototypes
 // All these functions are found in `dictionary.c`
 // These prototypes were left here so that they can
 // be accessed fro0m `speller.c` and `dictionary.c`
 unsigned int hash(const char *word);
 node *new_node(char word[LENGTH + 1]);
-node *insert_node(node *tree, char *word, int *left_size, int *right_size);
+node *insert_node(node *tree, char *word, int left_size, int right_size);
 bool load(const char *dictionary);
 unsigned int size(void);
 bool check(const char *word);
