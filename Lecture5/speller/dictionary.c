@@ -93,8 +93,8 @@ bool load(const char *dictionary) {
         // every time you add a word (this might be complicated by the binary structure though)
         // SO, let's try that
         int index = hash(word);
-        int *left_size = 0;
-        int *right_size = 0;
+        static int *left_size = 0;
+        static int *right_size = 0;
 
         // The first check need to determine if both counts are equal
         // If they are, let's just assign the word to the left
