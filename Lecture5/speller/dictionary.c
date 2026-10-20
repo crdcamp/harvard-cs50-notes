@@ -74,8 +74,6 @@ node *insert_node(node *root, char *word) {
         return insert_node(root->right, word);
     }
 
-    print_tree(root, 4);
-
     return root;
 }
 
@@ -92,7 +90,6 @@ bool load(const char *dictionary) {
     char word_buffer[LENGTH + 2]; // `+ 2` instead of `+ 1` to account for `\n` char
     size_t word_buffer_size = sizeof(word_buffer);
     size_t tree_size = sizeof(node);
-    node *root = NULL;
     while ((word = fgets(word_buffer, word_buffer_size, dictionary_file)) != NULL) {
         // Strip `\n` from the end of `word`
         int word_size = strlen(word);
@@ -104,20 +101,11 @@ bool load(const char *dictionary) {
             continue;
         }
 
-        // Insert the node into the binary tree while updating left and right
-        // tree size
-        root = insert_node(root, word);
-        if (root == NULL) {
-            printf("Error allocating memory for `root`\n");
-            return false;
-        }
-
         // Insert the tree into the appropriate hash index
-        int index = hash(root->word);
-        table[index] = root;
-
+        int index = hash(word);
+        table[index] = insert_node(table[index], word);
         printf("RESULTING TREE FOR INDEX %i\n", index);
-        print_tree(root, 4);
+        print_tree(table[index], 4);
     }
 
     // If loop finished successfully, close the dictionary file and return `true`
