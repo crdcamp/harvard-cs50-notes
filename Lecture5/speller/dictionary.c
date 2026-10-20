@@ -61,17 +61,17 @@ node *insert_node(node *root, char *word) {
     // If both sides of the tree are equal, send the word to the left
     if (root->left_size == root->right_size) {
         root->left_size++;
-        return insert_node(root->left, word);
+        root->left = insert_node(root->left, word);
     }
     // Otherwise, if the left side has less nodes than the right, send the word left
     else if (root->left_size < root->right_size) {
         root->left_size++;
-        return insert_node(root->left, word);
+        root->left = insert_node(root->left, word);
     }
     // Otherwise, if the right side has less nodes than the left, send the word right
     else if (root->left_size > root->right_size) {
         root->right_size++;
-        return insert_node(root->right, word);
+        root->right = insert_node(root->right, word);
     }
 
     return root;
