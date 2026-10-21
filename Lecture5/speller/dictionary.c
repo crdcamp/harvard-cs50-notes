@@ -80,7 +80,30 @@ node *insert_node(node *root, char *word, int word_len) {
         return new_node(word);
     }
 
-    //
+
+    // Compare each letter in the word with each letter in the node's word
+    for (int i = 0; i < word_len; i++) {
+
+        // In it's current form, THIS FUNCTION LIKELY PREMATURELY RETURN
+        // It might stop the second it finds a matching word
+        // Moreover, the continue statement could potentially
+        // result in an infinite loop
+
+        // If the letter is "less", send it down the left node
+        if (word[i] < root->word[i]) {
+            root->left = insert_node(root->left, word, word_len);
+            return root->left;
+        }
+
+        // If the letter is "greater", send it down the right node
+        else if (word[i] > root->word[i]) {
+            root->right = insert_node(root->right, word, word_len);
+        }
+
+        // If the letters are the same, move onto the next iteration
+        else if (word[i] == root->word[i]) {}
+            continue;
+        }
 
     return root;
 }
@@ -101,8 +124,8 @@ bool load(const char *dictionary) {
     while ((word = fgets(word_buffer, word_buffer_size, dictionary_file)) != NULL) {
         // Strip `\n` from the end of `word`
         int word_len = strlen(word);
-        if ((word[word_size - 1]) == '\n') {
-            word[word_size - 1] = 0;
+        if ((word[word_len - 1]) == '\n') {
+            word[word_len - 1] = 0;
         }
         // If there's no newline, keep er goin
         // (there should be error handling here, but we're not worried about that here)
