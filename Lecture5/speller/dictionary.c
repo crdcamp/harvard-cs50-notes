@@ -100,6 +100,7 @@ node *insert_node(node *root, char *word, int word_len) {
         }
 
         // If the letters are the same, move onto the next iteration
+        // THIS RESULTS IN A DOUBLE INSERTION. NEEDS A FIX!
         else if (word[i] == root->word[i]) {}
             continue;
         }
@@ -136,7 +137,12 @@ bool load(const char *dictionary) {
         int index = hash(word);
         table[index] = insert_node(table[index], word, word_len);
         printf("RESULTING TREE FOR INDEX %i\n", index);
-        print_tree(table[index], 4);
+    }
+
+    // TESTING: Print each index of the table
+    int table_n = sizeof(table) / sizeof(table[0]);
+    for (int i = 0; i < table_n; i++) {
+        print_tree(table[i], 4);
     }
 
     // If loop finished successfully, close the dictionary file and return `true`
