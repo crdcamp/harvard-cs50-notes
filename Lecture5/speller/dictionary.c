@@ -80,30 +80,13 @@ node *insert_node(node *root, char *word, int word_len) {
         return new_node(word);
     }
 
+    if (strcasecmp(root->word, word) < 0) {
+        root->left = insert_node(root->left, word, word_len);
+    }
 
-    // Compare each letter in the word with each letter in the node's word
-    for (int i = 0; i < word_len; i++) {
-
-        // In it's current form, THIS FUNCTION LIKELY PREMATURELY RETURN
-        // It might stop the second it finds a matching word
-        // Moreover, the continue statement could potentially
-        // result in an infinite loop
-
-        // If the letter is "less", send it down the left node
-        if (word[i] < root->word[i]) {
-            root->left = insert_node(root->left, word, word_len);
-        }
-
-        // If the letter is "greater", send it down the right node
-        else if (word[i] > root->word[i]) {
-            root->right = insert_node(root->right, word, word_len);
-        }
-
-        // If the letters are the same, move onto the next iteration
-        // THIS RESULTS IN A DOUBLE INSERTION. NEEDS A FIX!
-        else if (word[i] == root->word[i]) {}
-            continue;
-        }
+    else if (strcasecmp(root->word, word) > 0) {
+        root->right = insert_node(root->right, word, word_len);
+    }
 
     return root;
 }
@@ -136,16 +119,10 @@ bool load(const char *dictionary) {
         // Insert the tree into the appropriate hash index
         int index = hash(word);
         table[index] = insert_node(table[index], word, word_len);
-        printf("RESULTING TREE FOR INDEX %i\n", index);
-    }
-
-    // TESTING: Print each index of the table
-    int table_n = sizeof(table) / sizeof(table[0]);
-    for (int i = 0; i < table_n; i++) {
-        print_tree(table[i], 4);
     }
 
     // If loop finished successfully, close the dictionary file and return `true`
+    printf("Sorted binary tree loaded\n");
     fclose(dictionary_file);
     return true;
 }
