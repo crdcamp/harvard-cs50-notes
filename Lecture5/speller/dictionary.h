@@ -40,13 +40,19 @@ typedef struct node
     int right_size;
 } node;
 
+typedef struct test_node {
+    char word[LENGTH + 1];
+    struct test_node *left;
+    struct test_node *right;
+} test_node;
+
 // Prototypes
 // All these functions are found in `dictionary.c`
 // These prototypes were left here so that they can
 // be accessed fro0m `speller.c` and `dictionary.c`
 unsigned int hash(const char *word);
 node *new_node(char word[LENGTH + 1]);
-node *insert_node(node *root, char *word);
+node *insert_node(node *root, char *word, int word_len);
 void print_tree(node *root, int level);
 bool load(const char *dictionary);
 

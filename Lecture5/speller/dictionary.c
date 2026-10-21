@@ -52,27 +52,35 @@ void print_tree(node *root, int level)
         print_tree(root->right, level + 1);
 }
 
-node *insert_node(node *root, char *word) {
+// Now that we've created a balanced tree, it's time to start thinking
+// about how we can convert this into a sorted tree
+
+// To begin with, we obviously need to do this alphabetically, which by
+// extension can most likely be done using the < and > symbols, as we know
+// that chars are essentially just integers in disguise
+
+// It's worth noting that this will  require iterating over the word,
+// which will certainly affect load time, but this will also drastically
+// increase the search time. This can also be alleviated with a better
+// hash function in addition to more indices in the hash table,
+// as more indices == less recursion when inserting words (ideally)
+
+// Now, what tools do we have at our disposal?
+
+// Well, the earlier note about iterating over the entire word is probably
+// partially incorrect. We can just iterate until we've reached the the end
+// of the shorter word. Moreover, I still need to fully picture how to actually
+// alphabetically organize the words, since that's a bit of a challenge.
+
+// Let's begin with a test file and see where to go from there.
+
+node *insert_node(node *root, char *word, int word_len) {
     // If the tree is empty or you reach an empty node,
     if (root == NULL) {
         return new_node(word);
     }
 
-    // If both sides of the tree are equal, send the word to the left
-    if (root->left_size == root->right_size) {
-        root->left_size++;
-        root->left = insert_node(root->left, word);
-    }
-    // Otherwise, if the left side has less nodes than the right, send the word left
-    else if (root->left_size < root->right_size) {
-        root->left_size++;
-        root->left = insert_node(root->left, word);
-    }
-    // Otherwise, if the right side has less nodes than the left, send the word right
-    else if (root->left_size > root->right_size) {
-        root->right_size++;
-        root->right = insert_node(root->right, word);
-    }
+    //
 
     return root;
 }
@@ -92,18 +100,19 @@ bool load(const char *dictionary) {
     size_t tree_size = sizeof(node);
     while ((word = fgets(word_buffer, word_buffer_size, dictionary_file)) != NULL) {
         // Strip `\n` from the end of `word`
-        int word_size = strlen(word);
+        int word_len = strlen(word);
         if ((word[word_size - 1]) == '\n') {
             word[word_size - 1] = 0;
         }
         // If there's no newline, keep er goin
+        // (there should be error handling here, but we're not worried about that here)
         else {
             continue;
         }
 
         // Insert the tree into the appropriate hash index
         int index = hash(word);
-        table[index] = insert_node(table[index], word);
+        table[index] = insert_node(table[index], word, word_len);
         printf("RESULTING TREE FOR INDEX %i\n", index);
         print_tree(table[index], 4);
     }
