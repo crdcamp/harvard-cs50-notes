@@ -92,7 +92,6 @@ node *insert_node(node *root, char *word, int word_len) {
         // If the letter is "less", send it down the left node
         if (word[i] < root->word[i]) {
             root->left = insert_node(root->left, word, word_len);
-            return root->left;
         }
 
         // If the letter is "greater", send it down the right node
