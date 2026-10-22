@@ -61,6 +61,8 @@ unsigned int size(void);
 int check_helper(node *root, const char *word);
 bool check(const char *word);
 
+// Unload
+void unload_helper(node *root);
 bool unload(void);
 
 #endif

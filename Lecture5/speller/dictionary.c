@@ -175,7 +175,24 @@ bool check(const char *word) {
     else return false;
 }
 
+void unload_helper(node *root) {
+    if (root != NULL) {
+        unload_helper(root->left);
+        unload_helper(root->right);
+        free(root);
+    }
+
+    return;
+}
+
 // Unloads dictionary from memory, returning true if successful, else false
 bool unload(void) {
-    return false;
+    for (int i = 0; i < N; i++) {
+        if (table[i] != NULL) {
+            unload_helper(table[i]);
+        }
+        else continue;
+    }
+
+    return true;
 }
