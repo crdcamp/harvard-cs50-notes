@@ -130,19 +130,19 @@ bool load(const char *dictionary) {
 }
 
 // Helper function for counting nodes
-int count_nodes(node *root) {
+int size_helper(node *root) {
     if (root == NULL) {
         return 0;
     }
 
-    return count_nodes(root->left) + 1 + count_nodes(root->right);
+    return size_helper(root->left) + 1 + size_helper(root->right);
 }
 
 unsigned int size(void) {
     unsigned int size = 0;
     for (int i = 0; i < N; i++) {
         if (table[i] != NULL) {
-            size += count_nodes(table[i]);
+            size += size_helper(table[i]);
         }
         else continue;
     }
@@ -152,7 +152,17 @@ unsigned int size(void) {
 // This will need to be edited when you start adjusting the
 // hash table a bit more
 // Returns true if word is in dictionary, else false
+bool check_helper(node *root) {
+
+}
+
 bool check(const char *word) {
+    for (int i = 0; i < N; i++) {
+        if (table[i] != NULL) {
+
+        }
+    }
+
     return false;
 }
 

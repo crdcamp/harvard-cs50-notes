@@ -42,13 +42,25 @@ typedef struct node
 
 // Prototypes
 unsigned int hash(const char *word);
+
+// Node creation
 node *new_node(char word[LENGTH + 1]);
 node *insert_node(node *root, char *word, int word_len);
+
+// Print ze tree
 void print_tree(node *root, int level);
+
+// Loads the dictionary into memory
 bool load(const char *dictionary);
-int count_nodes(node *root);
+
+// Dictionary size calculation
+int size_helper(node *root);
 unsigned int size(void);
+
+// Check
+bool check_helper(node *root);
 bool check(const char *word);
+
 bool unload(void);
 
 #endif
