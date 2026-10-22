@@ -122,7 +122,9 @@ bool load(const char *dictionary) {
     }
 
     // If loop finished successfully, close the dictionary file and return `true`
-    printf("Sorted binary tree loaded\n");
+    for (int i = 0; i < N; i++) {
+        print_tree(table[i], 4);
+    }
     fclose(dictionary_file);
     return true;
 }
@@ -131,7 +133,27 @@ bool load(const char *dictionary) {
 // Shouldn't this just be part of `load` if we don't want to iterate through
 // the entire hash table again? that would be BLAZINGLY FAST wouldn't it?
 unsigned int size(void) {
-    return 0;
+    int size = 0;
+    // Iterate through each index in the hash table
+    for (int i = 0; i < N; i++) {
+        // If the table index is null, move onto the next index
+        if (table[i] == NULL) {
+            continue;
+        }
+        // Otherwise, count the number of words in the index
+        else {
+            // Count the left nodes
+            while (table[i]->left != NULL) {
+                size++;
+            }
+            // Count the right nodes
+            while (table[i]->right != NULL) {
+                size ++;
+            }
+        }
+    }
+
+    return size;
 }
 
 // This will need to be edited when you start adjusting the
