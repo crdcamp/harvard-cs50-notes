@@ -58,7 +58,7 @@ int size_helper(node *root);
 unsigned int size(void);
 
 // Check
-bool check_helper(node *root);
+int check_helper(node *root, const char *word);
 bool check(const char *word);
 
 bool unload(void);

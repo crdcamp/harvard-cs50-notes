@@ -152,15 +152,20 @@ unsigned int size(void) {
 // This will need to be edited when you start adjusting the
 // hash table a bit more
 // Returns true if word is in dictionary, else false
-bool check_helper(node *root) {
+int check_helper(node *root, const char *word) {
+    if (root == NULL) {
+        return 0;
+    }
+    if (strcasecmp(word, root->word) == 0) {
+        return 0;
+    }
 
 }
 
 bool check(const char *word) {
-    for (int i = 0; i < N; i++) {
-        if (table[i] != NULL) {
-
-        }
+    int index = hash(word);
+    if (check_helper(table[index], word) == 0) {
+        return true;
     }
 
     return false;
