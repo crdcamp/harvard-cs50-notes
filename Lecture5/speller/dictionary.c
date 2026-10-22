@@ -149,26 +149,30 @@ unsigned int size(void) {
     return size;
 }
 
-// This will need to be edited when you start adjusting the
-// hash table a bit more
-// Returns true if word is in dictionary, else false
 int check_helper(node *root, const char *word) {
-    int check = strcasecmp(root->word, word);
-    if (check == 0) {
-        return check;
-    }
     if (root == NULL) {
         return -1;
     }
 
-    return check_helper(root, word);
+    int check = strcasecmp(root->word, word);
+
+    if (check < 0) {
+        return check_helper(root->left, word);
+    }
+    if (check > 0) {
+        return check_helper(root->right, word);
+    }
+
+    // If it's not greater or less than 0, then it's 0 dumbass
+    return 0;
 }
 
 bool check(const char *word) {
     int index = hash(word);
     if (check_helper(table[index], word) == 0) {
         return true;
-    } else return false;
+    }
+    else return false;
 }
 
 // Unloads dictionary from memory, returning true if successful, else false
