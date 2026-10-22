@@ -46,7 +46,7 @@ node *new_node(char word[LENGTH + 1]);
 node *insert_node(node *root, char *word, int word_len);
 void print_tree(node *root, int level);
 bool load(const char *dictionary);
-
+int count_nodes(node *root);
 unsigned int size(void);
 bool check(const char *word);
 bool unload(void);

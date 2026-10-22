@@ -1,5 +1,3 @@
-// Implements a dictionary's functionality
-// You don't need to edit anything in this file
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -93,6 +91,7 @@ node *insert_node(node *root, char *word, int word_len) {
 
 // Loads dictionary into memory, returning true if successful, else false
 bool load(const char *dictionary) {
+    printf("Loading dictionary...\n");
     // Open the dictionary file
     FILE *dictionary_file = fopen(dictionary, "r");
     if (dictionary_file == NULL) {
@@ -122,48 +121,31 @@ bool load(const char *dictionary) {
     }
 
     // If loop finished successfully, close the dictionary file and return `true`
-    for (int i = 0; i < N; i++) {
-        print_tree(table[i], 4);
-    }
+    // for (int i = 0; i < N; i++) {
+    //     print_tree(table[i], 4);
+    // }
+    printf("Dictionary loaded\n");
     fclose(dictionary_file);
     return true;
 }
 
-// Returns number of words in dictionary if loaded, else 0 if not yet loaded
-// Shouldn't this just be part of `load` if we don't want to iterate through
-// the entire hash table again? that would be BLAZINGLY FAST wouldn't it?
-unsigned int size(void) {
-    int size = 0;
-    // Iterate through each index in the hash table
-    for (int i = 0; i < N; i++) {
-        node *current_node = table[i];
-
-        // Count the root index if it isn't null
-        if (current_node != NULL) {
-            size++;
-        }
-        else continue;
-
-        // Count the left side
-        while (current_node->left != NULL) {
-            printf("Adding left word '%s' to count\n", current_node->left->word);
-            size++;
-            current_node = current_node->left;
-        }
-
-        // Reset the pointer to the table's index
-        current_node = table[i];
-
-        // Count the right side
-        while (current_node != NULL) {
-            printf("Adding right word '%s' to count\n", current_node->right->word);
-            size++;
-            current_node = current_node->right;
-        }
+// Helper function for counting nodes
+int count_nodes(node *root) {
+    if (root == NULL) {
+        return 0;
     }
 
-    printf("Size: %i\n", size);
+    return count_nodes(root->left) + 1 + count_nodes(root->right);
+}
 
+unsigned int size(void) {
+    unsigned int size = 0;
+    for (int i = 0; i < N; i++) {
+        if (table[i] != NULL) {
+            size += count_nodes(table[i]);
+        }
+        else continue;
+    }
     return size;
 }
 
