@@ -133,21 +133,16 @@ bool load(const char *dictionary) {
 // Shouldn't this just be part of `load` if we don't want to iterate through
 // the entire hash table again? that would be BLAZINGLY FAST wouldn't it?
 unsigned int size(void) {
-    printf("Calculating size...\n");
     int size = 0;
     // Iterate through each index in the hash table
     for (int i = 0; i < N; i++) {
         node *current_node = table[i];
-        // If the table index is null, move onto the next index
-        if (current_node == NULL) {
-            continue;
-        }
 
-        // Count the root node
-        else if (current_node != NULL) {
-            printf("Adding root word '%s' to count\n", current_node->word);
+        // Count the root index if it isn't null
+        if (current_node != NULL) {
             size++;
         }
+        else continue;
 
         // Count the left side
         while (current_node->left != NULL) {
